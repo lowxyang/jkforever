@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>You're invited</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=7" />
+  </head>
+  <body>
+    <div class="gate" id="gate">
+      <div class="gate-card">
+        <p class="gate-kicker">A wedding invitation</p>
+        <h1 class="script gate-names" id="gate-names"></h1>
+        <form class="gate-form" id="gate-form">
+          <label class="sr-only" for="passcode">Passcode</label>
+          <input
+            id="passcode"
+            name="passcode"
+            type="password"
+            autocomplete="off"
+            placeholder="Enter the passcode"
+            required
+          />
+          <button type="submit">Open the invitation</button>
+          <p class="gate-error" id="gate-error" aria-live="polite"></p>
+        </form>
+        <p class="gate-hint">The code is on your paper invite.</p>
+      </div>
+    </div>
+
+    <main class="stage" id="invitation" hidden>
+      <article class="book" aria-label="Wedding invitation card">
+        <section class="page page--left" id="page-gallery" aria-label="Photo gallery">
+          <div class="gallery">
+            <button class="preview" id="preview" type="button">
+              <span class="preview-frame is-placeholder" id="preview-frame">
+                <img id="preview-img" alt="" />
+                <span class="preview-caption" id="preview-caption"></span>
+              </span>
+            </button>
+            <div class="filmstrip">
+              <button class="gallery-nav gallery-nav--prev" id="gallery-prev" type="button" aria-label="Previous photos">
+                ‹
+              </button>
+              <div class="reel" id="reel" tabindex="0"></div>
+              <button class="gallery-nav gallery-nav--next" id="gallery-next" type="button" aria-label="Next photos">
+                ›
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page page--right" id="page-details" aria-label="Wedding information">
+          <header class="invite-head">
+            <p class="kicker" id="tagline"></p>
+            <h1 class="script invite-names" id="invite-names"></h1>
+            <p class="invite-meta" id="when"></p>
+            <p class="invite-meta" id="where"></p>
+          </header>
+
+          <section class="panel">
+            <h2>Our day</h2>
+            <p id="story"></p>
+            <p id="dress"></p>
+          </section>
+
+          <section class="panel">
+            <h2>Schedule</h2>
+            <ol class="schedule" id="schedule"></ol>
+          </section>
+
+          <section class="panel">
+            <h2>Will you join us?</h2>
+            <p id="rsvp-by"></p>
+            <form class="rsvp" id="rsvp-form">
+              <label>
+                <span>Full name</span>
+                <input name="name" required autocomplete="name" />
+              </label>
+              <label>
+                <span>Will you attend?</span>
+                <select name="attending" required>
+                  <option value="yes">Joyfully accepts</option>
+                  <option value="no">Regretfully declines</option>
+                </select>
+              </label>
+              <label>
+                <span>Number of guests (including you)</span>
+                <input name="guests" type="number" min="1" max="10" value="1" required />
+              </label>
+              <label>
+                <span>Dietary restrictions</span>
+                <textarea name="diet" placeholder="Vegetarian, allergies, none…"></textarea>
+              </label>
+              <label>
+                <span>Song or note for us</span>
+                <textarea name="note" placeholder="Optional"></textarea>
+              </label>
+              <label>
+                <span>Email (optional)</span>
+                <input name="email" type="email" autocomplete="email" />
+              </label>
+              <button type="submit">Send RSVP</button>
+              <p class="rsvp-status" id="rsvp-status" aria-live="polite"></p>
+            </form>
+          </section>
+        </section>
+      </article>
+    </main>
+
+    <button class="mute" id="mute" type="button" aria-pressed="false">Sound on</button>
+    <audio id="music" loop preload="none"></audio>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <button class="lightbox-close" id="lightbox-close" type="button">Close</button>
+      <button class="lightbox-nav lightbox-nav--prev" id="lightbox-prev" type="button" aria-label="Previous photo">
+        ‹
+      </button>
+      <figure class="lightbox-frame">
+        <img id="lightbox-img" alt="" />
+        <figcaption id="lightbox-caption"></figcaption>
+      </figure>
+      <button class="lightbox-nav lightbox-nav--next" id="lightbox-next" type="button" aria-label="Next photo">
+        ›
+      </button>
+    </div>
+
+    <script src="js/config.js?v=4"></script>
+    <script src="js/app.js?v=7"></script>
+  </body>
+</html>
