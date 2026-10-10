@@ -25,25 +25,25 @@ echo -n "your-new-code" | shasum -a 256
 
 Paste the hex string into `passcodeHash`. This is a courtesy lock, not real security — anyone who can view the GitHub repo can bypass it.
 
-## Connect RSVPs to a spreadsheet
+## RSVPs in Excel
 
-GitHub Pages is static, so the form cannot write an `.xlsx` file on GitHub. The usual path:
+Run the site with the included server so each reply is added to `RSVPs.xlsx` in this folder:
 
-1. Create a Google Sheet with a tab `RSVPs` and header row: Timestamp, Name, Attending, Guests, Diet, Note, Email
-2. Paste `sheets/Code.gs` into **Extensions → Apps Script**
-3. Deploy as a **web app** (execute as you, access: anyone)
-4. Put the web app URL in `sheetsEndpoint`
+```bash
+python3 -m pip install -r requirements.txt
+python3 server.py
+```
 
-Until that URL is set, RSVPs are stored only in the guest’s browser so you can still preview the form.
+Open `RSVPs.xlsx` in Excel. Close it before someone submits, or the save can fail while the file is open.
 
-You can download the Google Sheet as Excel whenever you like (**File → Download → Microsoft Excel**).
+GitHub Pages cannot write that file. For the public site, create a Google Sheet (tab `RSVPs`, headers Timestamp, Name, Attending, Guests, Diet, Note, Email), paste `sheets/Code.gs` into **Extensions → Apps Script**, deploy it as a web app (execute as you, access: anyone), and put that URL in `sheetsEndpoint`. Download the Google Sheet as Excel any time (**File → Download → Microsoft Excel**).
 
 ## Preview locally
 
-Open `index.html` in a browser, or from this folder:
+From this folder:
 
 ```bash
-python3 -m http.server 8080
+python3 server.py
 ```
 
 Then visit http://localhost:8080

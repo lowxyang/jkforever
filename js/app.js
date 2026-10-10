@@ -46,8 +46,7 @@
       .join("");
 
     if (cfg.backgroundImage) {
-      document.body.classList.add("has-bg");
-      document.body.style.backgroundImage = `url("${cfg.backgroundImage}")`;
+      document.documentElement.style.backgroundImage = `url("${cfg.backgroundImage}")`;
     }
   }
 
@@ -263,27 +262,32 @@
     const data = Object.fromEntries(new FormData(rsvpForm));
     data.submittedAt = new Date().toISOString();
 
-    if (!cfg.sheetsEndpoint) {
-      const existing = JSON.parse(localStorage.getItem("wedding-rsvps") || "[]");
-      existing.push(data);
-      localStorage.setItem("wedding-rsvps", JSON.stringify(existing));
-      rsvpStatus.textContent =
-        "Saved on this device (spreadsheet not connected yet).";
-      rsvpForm.reset();
-      return;
-    }
+    const endpoint = cfg.sheetsEndpoint || "/api/rsvp";
+    const localSheet = endpoint.startsWith("/");
 
     try {
-      await fetch(cfg.sheetsEndpoint, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        endpoint,
+        localSheet
+          ? {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            }
+          : {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify(data),
+            }
+      );
+      if (localSheet && !response.ok) throw new Error("RSVP was not saved");
       rsvpStatus.textContent = "Thank you — we have your reply.";
       rsvpForm.reset();
     } catch (error) {
-      rsvpStatus.textContent = "Could not send just now. Please try again.";
+      rsvpStatus.textContent = localSheet
+        ? "Could not save to the spreadsheet. Close RSVPs.xlsx if it is open, then try again."
+        : "Could not send just now. Please try again.";
     }
   });
 
