@@ -75,8 +75,6 @@
   const preview = document.getElementById("preview");
   const previewFrame = document.getElementById("preview-frame");
   const previewPage = document.getElementById("preview-page");
-  const pageBack = document.getElementById("page-back");
-  const leftPage = document.getElementById("page-gallery");
   const previewImg = document.getElementById("preview-img");
   const underImg = document.getElementById("preview-under-img");
   const previewCaption = document.getElementById("preview-caption");
@@ -167,7 +165,6 @@
     previewFrame.classList.remove("is-placeholder");
     previewFrame.classList.add("is-instant");
     previewFrame.classList.remove("is-turning");
-    leftPage.classList.remove("is-turning");
     void previewPage.offsetWidth;
     previewFrame.classList.remove("is-instant");
     flipping = false;
@@ -185,18 +182,17 @@
       underImg.style.visibility = "";
       framePhoto(underImg, photo);
       underImg.src = photo.src;
-      leftPage.classList.add("is-turning");
       previewFrame.classList.add("is-turning");
       let settled = false;
       const finish = (event) => {
         if (settled) return;
-        if (event && event.animationName !== "turn-back") return;
+        if (event && event.animationName !== "turn-front") return;
         settled = true;
-        pageBack.removeEventListener("animationend", finish);
+        previewPage.removeEventListener("animationend", finish);
         finishTurn(index, photo);
       };
-      pageBack.addEventListener("animationend", finish);
-      window.setTimeout(finish, 1900);
+      previewPage.addEventListener("animationend", finish);
+      window.setTimeout(finish, 1300);
     };
     incoming.onload = begin;
     incoming.onerror = begin;

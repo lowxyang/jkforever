@@ -227,11 +227,6 @@ body {
   overflow: hidden;
 }
 
-.page--left.is-turning {
-  overflow: visible;
-  z-index: 4;
-}
-
 .page--right {
   padding: 1.6rem 1.6rem 2.4rem 1.85rem;
 }
@@ -264,32 +259,22 @@ body {
   background: #ddd3c4;
 }
 
-.preview-frame.is-turning {
-  overflow: visible;
-  z-index: 5;
-}
-
 .preview-under,
 .preview-page,
-.page-back,
 .page-shade {
   position: absolute;
   inset: 0;
 }
 
-.preview-page,
-.page-back {
-  transform-origin: right center;
-}
-
 .preview-page {
   z-index: 1;
+  transform-origin: left center;
 }
 
 .page-shade {
-  background: linear-gradient(270deg, rgba(44, 36, 24, 0.42), transparent 48%);
+  background: linear-gradient(90deg, rgba(44, 36, 24, 0.16), transparent 42%);
   opacity: 0;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.9s ease;
 }
 
 .preview-frame.is-turning .page-shade {
@@ -297,56 +282,30 @@ body {
 }
 
 .page-back {
-  z-index: 3;
-  opacity: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(270deg, rgba(44, 36, 24, 0.2), rgba(255, 252, 247, 0.45) 10%, transparent 28%),
-    linear-gradient(90deg, #e4d8c8, #f7f1e8 46%, #efe4d6);
-  box-shadow: -20px 12px 34px rgba(44, 36, 24, 0.28);
+  display: none;
 }
 
 .preview-frame.is-turning .preview-page {
-  animation: turn-front 0.72s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
-}
-
-.preview-frame.is-turning .page-back {
-  opacity: 1;
-  animation: turn-back 0.95s cubic-bezier(0.2, 0.7, 0.3, 1) 0.62s forwards;
-}
-
-.preview-frame.is-instant .preview-page,
-.preview-frame.is-instant .page-back {
-  animation: none;
-  transform: none;
-  opacity: 0;
+  animation: turn-front 1.05s cubic-bezier(0.4, 0.15, 0.3, 1) forwards;
 }
 
 .preview-frame.is-instant .preview-page {
+  animation: none;
+  transform: none;
   opacity: 1;
 }
 
 @keyframes turn-front {
-  from {
-    transform: perspective(1200px) rotateY(0deg);
-  }
-  to {
-    transform: perspective(1200px) rotateY(88deg);
-    box-shadow: 22px 12px 32px rgba(44, 36, 24, 0.32);
-  }
-}
-
-@keyframes turn-back {
   0% {
-    transform: perspective(1200px) rotateY(92deg);
+    transform: perspective(1800px) rotateY(0deg);
     opacity: 1;
   }
-  72% {
-    transform: perspective(1200px) rotateY(180deg);
+  70% {
+    transform: perspective(1800px) rotateY(-18deg);
     opacity: 1;
   }
   100% {
-    transform: perspective(1200px) rotateY(180deg);
+    transform: perspective(1800px) rotateY(-22deg);
     opacity: 0;
   }
 }
