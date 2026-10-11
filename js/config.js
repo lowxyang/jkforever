@@ -2,9 +2,7 @@
  * Personalize the invitation here.
  * Photos: drop files into assets/photos/ and list them below.
  * Music: drop an mp3 into assets/music/ and set musicSrc.
- * Passcode: default is "forever". To change it, run in a terminal:
- *   echo -n "your-new-code" | shasum -a 256
- * then paste the hex into passcodeHash.
+ * Passwords: add guests in guest-passwords.md (one name, a vertical bar, then their password).
  *
  * RSVPs: `python3 server.py` writes each reply to RSVPs.xlsx.
  * For a public site, paste a Google Apps Script web app URL into sheetsEndpoint.
@@ -39,7 +37,7 @@ window.WEDDING = {
   /** Replies from the live site are appended to the Wedding RSVPs Google Sheet. */
   sheetsEndpoint:
     "https://script.google.com/macros/s/AKfycbz1VtbDwMWhD7wE88x8ktB5PzqZQ5a65op-OtWDbgJUVUMklTiyeEXIQ_T-AriFxz4/exec",
-  musicSrc: "assets/music/song.mp3",
+  musicSrc: "assets/music/yes-i-will.mp3",
   backgroundImage: "assets/background/silk.jpg",
   fonts: {
     script: "Great Vibes",

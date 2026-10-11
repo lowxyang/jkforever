@@ -2,7 +2,7 @@
 
 A password-gated two-page card: photos scroll on the left, details and RSVP on the right. Host it on GitHub Pages. Replies can land in a Google Sheet you open in Excel.
 
-Default passcode while you build: **forever**
+Guest passwords live in `guest-passwords.md`. A sample code, `forever`, is in that file until you replace it.
 
 ## Personalize
 
@@ -12,18 +12,14 @@ Edit `js/config.js`:
 - Photo list (files go in `assets/photos/`)
 - Background image (`assets/background/`)
 - Music (`assets/music/song.mp3`)
-- Passcode hash
+- Guest passwords (`guest-passwords.md`)
 - `sheetsEndpoint` once the spreadsheet is connected
 
 Fonts and colours live in `css/styles.css` (`--script`, `--serif`, cream/gold/sage).
 
-### Change the passcode
+### Add a guest password
 
-```bash
-echo -n "your-new-code" | shasum -a 256
-```
-
-Paste the hex string into `passcodeHash`. This is a courtesy lock, not real security — anyone who can view the GitHub repo can bypass it.
+Open `guest-passwords.md` and add a line: `Name | password`. This is a courtesy lock, not real security — anyone who can view the GitHub repo can read the list.
 
 ## RSVPs in Excel
 

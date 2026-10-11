@@ -16,12 +16,31 @@
     return `${cfg.names.one} <span class="gate-and">${cfg.names.and}</span> ${cfg.names.two}`;
   }
 
-  async function sha256Hex(value) {
-    const bytes = new TextEncoder().encode(value);
-    const hash = await crypto.subtle.digest("SHA-256", bytes);
-    return [...new Uint8Array(hash)]
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
+  let guests = [];
+
+  function parseGuestList(text) {
+    return text.split(/\r?\n/).flatMap((line) => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("```")) return [];
+      const bar = trimmed.lastIndexOf("|");
+      if (bar === -1) return [];
+      const name = trimmed.slice(0, bar).trim();
+      const password = trimmed.slice(bar + 1).trim();
+      if (!name || !password) return [];
+      return [{ name, password }];
+    });
+  }
+
+  function guestListUrl() {
+    const host = location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") return "guest-passwords.md";
+    return "https://raw.githubusercontent.com/lowxyang/jkforever/version-2/guest-passwords.md";
+  }
+
+  async function loadGuests() {
+    const response = await fetch(`${guestListUrl()}?t=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error("Guest list unavailable");
+    guests = parseGuestList(await response.text());
   }
 
   function fillCopy() {
@@ -229,8 +248,12 @@
     });
   }
 
-  function openInvitation() {
+  function openInvitation(guestName) {
     sessionStorage.setItem(sessionKey, "1");
+    if (guestName) sessionStorage.setItem("wedding-guest", guestName);
+    const nameInput = rsvpForm.elements.name;
+    const savedName = guestName || sessionStorage.getItem("wedding-guest");
+    if (nameInput && savedName && !nameInput.value) nameInput.value = savedName;
     gate.classList.add("is-open");
     invitation.hidden = false;
     gate.setAttribute("aria-hidden", "true");
@@ -248,9 +271,15 @@
     event.preventDefault();
     gateError.textContent = "";
     const entered = document.getElementById("passcode").value.trim();
-    const hash = await sha256Hex(entered);
-    if (hash === cfg.passcodeHash) {
-      openInvitation();
+    try {
+      if (!guests.length) await loadGuests();
+    } catch (error) {
+      gateError.textContent = "The guest list could not be loaded. Try again.";
+      return;
+    }
+    const match = guests.find((guest) => guest.password === entered);
+    if (match) {
+      openInvitation(match.name);
     } else {
       gateError.textContent = "That code doesn’t match. Try again.";
     }
