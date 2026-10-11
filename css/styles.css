@@ -269,11 +269,10 @@ body {
 .preview-page {
   z-index: 1;
   transform-origin: left center;
-  backface-visibility: hidden;
 }
 
 .page-shade {
-  background: linear-gradient(90deg, rgba(44, 36, 24, 0.28), transparent 55%);
+  background: linear-gradient(90deg, rgba(44, 36, 24, 0.16), transparent 42%);
   opacity: 0;
   transition: opacity 0.9s ease;
 }
@@ -298,10 +297,16 @@ body {
 
 @keyframes turn-front {
   0% {
-    transform: perspective(1400px) rotateY(0deg);
+    transform: perspective(1800px) rotateY(0deg);
+    opacity: 1;
+  }
+  70% {
+    transform: perspective(1800px) rotateY(-18deg);
+    opacity: 1;
   }
   100% {
-    transform: perspective(1400px) rotateY(-88deg);
+    transform: perspective(1800px) rotateY(-22deg);
+    opacity: 0;
   }
 }
 
