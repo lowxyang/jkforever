@@ -54,8 +54,12 @@ body {
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: transparent;
+  background: var(--cream);
   transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#invitation[hidden] {
+  display: none !important;
 }
 
 .gate.is-open {
@@ -91,6 +95,14 @@ body {
 .gate-names {
   font-size: clamp(2.6rem, 8vw, 3.6rem);
   margin: 0;
+}
+
+.couple-two {
+  display: inline;
+}
+
+.couple-nick {
+  font-size: 0.62em;
 }
 
 .gate-and {

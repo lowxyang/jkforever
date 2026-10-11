@@ -13,7 +13,10 @@
   const rsvpStatus = document.getElementById("rsvp-status");
 
   function coupleLine() {
-    return `${cfg.names.one} <span class="gate-and">${cfg.names.and}</span> ${cfg.names.two}`;
+    const nick = cfg.names.nickname
+      ? ` <span class="couple-nick">(${cfg.names.nickname})</span>`
+      : "";
+    return `${cfg.names.one} <span class="gate-and">${cfg.names.and}</span> <span class="couple-two">${cfg.names.two}${nick}</span>`;
   }
 
   let guests = [];
@@ -39,7 +42,9 @@
   }
 
   function fillCopy() {
-    document.title = `${cfg.names.one} & ${cfg.names.two}`;
+    document.title = cfg.names.nickname
+      ? `${cfg.names.one} & ${cfg.names.two} (${cfg.names.nickname})`
+      : `${cfg.names.one} & ${cfg.names.two}`;
     document.getElementById("gate-names").innerHTML = coupleLine();
     document.getElementById("invite-names").innerHTML = coupleLine();
     document.getElementById("tagline").textContent = cfg.tagline;

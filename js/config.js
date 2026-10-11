@@ -10,8 +10,9 @@
  */
 window.WEDDING = {
   names: {
-    one: "Alex",
-    two: "Jordan",
+    one: "Khine",
+    two: "Xian Yang",
+    nickname: "Josh",
     and: "&",
   },
   tagline: "together with their families",
