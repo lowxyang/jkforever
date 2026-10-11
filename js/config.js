@@ -45,7 +45,7 @@ window.WEDDING = {
     body: "Cormorant Garamond",
   },
   photos: [
-    { src: "assets/photos/01.jpg", caption: "The beginning" },
+    { src: "assets/photos/01.jpg", caption: "The beginning", position: "center 18%" },
     { src: "assets/photos/02.jpg", caption: "A favourite afternoon" },
     { src: "assets/photos/03.jpg", caption: "Travel" },
     { src: "assets/photos/04.jpg", caption: "Home" },

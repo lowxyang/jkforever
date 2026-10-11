@@ -125,6 +125,10 @@
     });
   }
 
+  function framePhoto(img, photo) {
+    img.style.objectPosition = photo.position || "center";
+  }
+
   function showPreview(index) {
     const photo = cfg.photos[index];
     if (!photo) return;
@@ -132,6 +136,7 @@
     previewFrame.classList.add("is-placeholder");
     previewImg.style.visibility = "";
     previewImg.alt = photo.caption || `Photo ${index + 1}`;
+    framePhoto(previewImg, photo);
     previewImg.src = photo.src;
     previewCaption.textContent = photo.caption || "";
     preview.setAttribute("aria-label", `Enlarge ${photo.caption || "photo"}`);
@@ -158,6 +163,7 @@
   function finishTurn(index, photo) {
     previewImg.alt = photo.caption || `Photo ${index + 1}`;
     previewImg.style.visibility = "";
+    framePhoto(previewImg, photo);
     previewImg.src = photo.src;
     previewCaption.textContent = photo.caption || "";
     preview.setAttribute("aria-label", `Enlarge ${photo.caption || "photo"}`);
@@ -187,6 +193,7 @@
     const incoming = new Image();
     const begin = () => {
       underImg.style.visibility = "";
+      framePhoto(underImg, photo);
       underImg.src = photo.src;
       leftPage.classList.add("is-turning");
       previewFrame.classList.add("is-turning");
