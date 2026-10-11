@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=14" />
+    <link rel="stylesheet" href="css/styles.css?v=15" />
   </head>
   <body>
     <div class="gate" id="gate">
@@ -40,7 +40,12 @@
           <div class="gallery">
             <button class="preview" id="preview" type="button">
               <span class="preview-frame is-placeholder" id="preview-frame">
-                <img id="preview-img" alt="" />
+                <span class="preview-under" aria-hidden="true">
+                  <img id="preview-under-img" alt="" />
+                </span>
+                <span class="preview-page" id="preview-page">
+                  <img id="preview-img" alt="" />
+                </span>
                 <span class="preview-caption" id="preview-caption"></span>
               </span>
             </button>
@@ -132,6 +137,6 @@
     </div>
 
     <script src="js/config.js?v=8"></script>
-    <script src="js/app.js?v=13"></script>
+    <script src="js/app.js?v=16"></script>
   </body>
 </html>

@@ -257,6 +257,30 @@ body {
   inset: 0;
   overflow: hidden;
   background: #ddd3c4;
+  perspective: 1800px;
+}
+
+.preview-under,
+.preview-page {
+  position: absolute;
+  inset: 0;
+}
+
+.preview-page {
+  z-index: 1;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
+}
+
+.preview-page.is-turning {
+  transform: rotateY(-180deg);
+  box-shadow: 16px 0 32px rgba(44, 36, 24, 0.32);
+}
+
+.preview-page.is-instant {
+  transition: none;
 }
 
 .preview-frame img {
@@ -284,6 +308,7 @@ body {
 }
 
 .preview-caption {
+  z-index: 2;
   position: absolute;
   left: 0;
   right: 0;
@@ -654,7 +679,9 @@ body {
   .shot:nth-child(n),
   .shot:nth-child(n):hover,
   .shot.is-active,
-  .shot.is-active:hover {
+  .shot.is-active:hover,
+  .preview-page,
+  .preview-page.is-turning {
     transform: none;
     transition: none;
   }

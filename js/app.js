@@ -74,11 +74,17 @@
   const lightboxCaption = document.getElementById("lightbox-caption");
   const preview = document.getElementById("preview");
   const previewFrame = document.getElementById("preview-frame");
+  const previewPage = document.getElementById("preview-page");
   const previewImg = document.getElementById("preview-img");
+  const underImg = document.getElementById("preview-under-img");
   const previewCaption = document.getElementById("preview-caption");
   let lightboxIndex = 0;
   let activeIndex = 0;
   let pointerStartX = 0;
+  let flipping = false;
+  let ignoreReelScroll = false;
+  let flipTimer = 0;
+  const flipEveryMs = 15000;
 
   function renderGallery() {
     reel.innerHTML = "";
@@ -106,7 +112,15 @@
       });
       reel.append(button);
     });
-    if (cfg.photos.length) selectPhoto(0, false);
+    if (cfg.photos.length) showPreview(0);
+    scheduleFlip();
+  }
+
+  function markShot(index) {
+    [...reel.children].forEach((shot, shotIndex) => {
+      shot.classList.toggle("is-active", shotIndex === index);
+      shot.setAttribute("aria-current", shotIndex === index ? "true" : "false");
+    });
   }
 
   function showPreview(index) {
@@ -119,22 +133,108 @@
     previewImg.src = photo.src;
     previewCaption.textContent = photo.caption || "";
     preview.setAttribute("aria-label", `Enlarge ${photo.caption || "photo"}`);
-    [...reel.children].forEach((shot, shotIndex) => {
-      shot.classList.toggle("is-active", shotIndex === index);
-      shot.setAttribute("aria-current", shotIndex === index ? "true" : "false");
-    });
+    markShot(index);
   }
 
   function centerShot(index) {
     const shot = reel.children[index];
     if (!shot) return;
+    ignoreReelScroll = true;
     const left = shot.offsetLeft - (reel.clientWidth - shot.offsetWidth) / 2;
     reel.scrollTo({ left, behavior: "smooth" });
+    const release = () => {
+      if (!flipping) ignoreReelScroll = false;
+    };
+    reel.addEventListener("scrollend", release, { once: true });
+    window.setTimeout(release, 800);
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function finishTurn(index, photo) {
+    previewImg.alt = photo.caption || `Photo ${index + 1}`;
+    previewImg.style.visibility = "";
+    previewImg.src = photo.src;
+    previewCaption.textContent = photo.caption || "";
+    preview.setAttribute("aria-label", `Enlarge ${photo.caption || "photo"}`);
+    activeIndex = index;
+    previewFrame.classList.remove("is-placeholder");
+    previewPage.classList.add("is-instant");
+    previewPage.classList.remove("is-turning");
+    void previewPage.offsetWidth;
+    previewPage.classList.remove("is-instant");
+    flipping = false;
+    ignoreReelScroll = false;
+  }
+
+  function turnPage(index, shouldCenter) {
+    const photo = cfg.photos[index];
+    if (!photo || flipping || index === activeIndex) return;
+    if (prefersReducedMotion()) {
+      showPreview(index);
+      if (shouldCenter) centerShot(index);
+      scheduleFlip();
+      return;
+    }
+    flipping = true;
+    markShot(index);
+    if (shouldCenter) centerShot(index);
+    const incoming = new Image();
+    const begin = () => {
+      underImg.style.visibility = "";
+      underImg.src = photo.src;
+      previewPage.classList.add("is-turning");
+      let settled = false;
+      const finish = (event) => {
+        if (settled) return;
+        if (event && event.target !== previewPage) return;
+        if (event && event.propertyName && event.propertyName !== "transform") return;
+        settled = true;
+        previewPage.removeEventListener("transitionend", finish);
+        finishTurn(index, photo);
+      };
+      previewPage.addEventListener("transitionend", finish);
+      window.setTimeout(finish, 1400);
+    };
+    incoming.onload = begin;
+    incoming.onerror = begin;
+    incoming.src = photo.src;
+    scheduleFlip();
+  }
+
+  function scheduleFlip() {
+    window.clearTimeout(flipTimer);
+    flipTimer = window.setTimeout(autoFlip, flipEveryMs);
+  }
+
+  function nextPhotoIndex(from) {
+    const count = reel.children.length;
+    for (let step = 1; step <= count; step += 1) {
+      const index = (from + step) % count;
+      const img = reel.children[index]?.querySelector("img");
+      if (img && img.complete && img.naturalWidth > 0) return index;
+    }
+    return -1;
+  }
+
+  function autoFlip() {
+    if (invitation.hidden || document.hidden || !lightbox.hidden || flipping) {
+      scheduleFlip();
+      return;
+    }
+    const next = nextPhotoIndex(activeIndex);
+    if (next < 0 || next === activeIndex) {
+      scheduleFlip();
+      return;
+    }
+    turnPage(next, true);
   }
 
   function selectPhoto(index, shouldCenter) {
-    showPreview(index);
-    if (shouldCenter) centerShot(index);
+    turnPage(index, shouldCenter);
+    scheduleFlip();
   }
 
   function scrollGallery(direction) {
@@ -149,6 +249,10 @@
   });
   previewImg.addEventListener("error", () => {
     previewImg.style.visibility = "hidden";
+    previewFrame.classList.add("is-placeholder");
+  });
+  underImg.addEventListener("error", () => {
+    underImg.style.visibility = "hidden";
   });
   preview.addEventListener("click", () => openLightbox(activeIndex));
 
@@ -189,6 +293,7 @@
   function closeLightbox() {
     lightbox.hidden = true;
     lightboxImg.removeAttribute("src");
+    scheduleFlip();
   }
 
   function stepLightbox(direction) {
@@ -210,6 +315,7 @@
   );
 
   reel.addEventListener("scroll", () => {
+    if (ignoreReelScroll || flipping) return;
     const center = reel.scrollLeft + reel.clientWidth / 2;
     let nearest = 0;
     let nearestDistance = Infinity;
@@ -221,7 +327,10 @@
         nearestDistance = distance;
       }
     });
-    if (nearest !== activeIndex) showPreview(nearest);
+    if (nearest !== activeIndex) {
+      showPreview(nearest);
+      scheduleFlip();
+    }
   });
 
   document.getElementById("gallery-prev").addEventListener("click", () => scrollGallery(-1));
@@ -254,6 +363,7 @@
     invitation.hidden = false;
     gate.setAttribute("aria-hidden", "true");
     startMusic();
+    scheduleFlip();
   }
 
   mute.addEventListener("click", () => {
