@@ -2,7 +2,7 @@
  * Personalize the invitation here.
  * Photos: drop files into assets/photos/ and list them below.
  * Music: drop an mp3 into assets/music/ and set musicSrc.
- * Passwords: add guests in guest-passwords.md (one name, a vertical bar, then their password).
+ * Passwords: add one password per line in guest-passwords.md. Capitalisation does not matter.
  *
  * RSVPs: `python3 server.py` writes each reply to RSVPs.xlsx.
  * For a public site, paste a Google Apps Script web app URL into sheetsEndpoint.

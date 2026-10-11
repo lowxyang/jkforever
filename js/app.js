@@ -20,14 +20,9 @@
 
   function parseGuestList(text) {
     return text.split(/\r?\n/).flatMap((line) => {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("```")) return [];
-      const bar = trimmed.lastIndexOf("|");
-      if (bar === -1) return [];
-      const name = trimmed.slice(0, bar).trim();
-      const password = trimmed.slice(bar + 1).trim();
-      if (!name || !password) return [];
-      return [{ name, password }];
+      const password = line.trim();
+      if (!password || password.startsWith("#") || password.startsWith("```")) return [];
+      return [password];
     });
   }
 
@@ -248,12 +243,8 @@
     });
   }
 
-  function openInvitation(guestName) {
+  function openInvitation() {
     sessionStorage.setItem(sessionKey, "1");
-    if (guestName) sessionStorage.setItem("wedding-guest", guestName);
-    const nameInput = rsvpForm.elements.name;
-    const savedName = guestName || sessionStorage.getItem("wedding-guest");
-    if (nameInput && savedName && !nameInput.value) nameInput.value = savedName;
     gate.classList.add("is-open");
     invitation.hidden = false;
     gate.setAttribute("aria-hidden", "true");
@@ -277,9 +268,10 @@
       gateError.textContent = "The guest list could not be loaded. Try again.";
       return;
     }
-    const match = guests.find((guest) => guest.password === entered);
+    const enteredKey = entered.toLowerCase();
+    const match = guests.find((password) => password.toLowerCase() === enteredKey);
     if (match) {
-      openInvitation(match.name);
+      openInvitation();
     } else {
       gateError.textContent = "That code doesn’t match. Try again.";
     }

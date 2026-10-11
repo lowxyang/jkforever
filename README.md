@@ -19,7 +19,7 @@ Fonts and colours live in `css/styles.css` (`--script`, `--serif`, cream/gold/sa
 
 ### Add a guest password
 
-Open `guest-passwords.md` and add a line: `Name | password`. This is a courtesy lock, not real security — anyone who can view the GitHub repo can read the list.
+Open `guest-passwords.md` and add one password per line. Capitalisation does not matter. This is a courtesy lock, not real security — anyone who can view the GitHub repo can read the list.
 
 ## RSVPs in Excel
 
