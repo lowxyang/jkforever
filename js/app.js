@@ -156,10 +156,6 @@
     window.setTimeout(release, 800);
   }
 
-  function prefersReducedMotion() {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }
-
   function finishTurn(index, photo) {
     previewImg.alt = photo.caption || `Photo ${index + 1}`;
     previewImg.style.visibility = "";
@@ -181,12 +177,6 @@
   function turnPage(index, shouldCenter) {
     const photo = cfg.photos[index];
     if (!photo || flipping || index === activeIndex) return;
-    if (prefersReducedMotion()) {
-      showPreview(index);
-      if (shouldCenter) centerShot(index);
-      scheduleFlip();
-      return;
-    }
     flipping = true;
     markShot(index);
     if (shouldCenter) centerShot(index);

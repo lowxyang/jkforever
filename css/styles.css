@@ -747,13 +747,7 @@ body {
   .shot:nth-child(n),
   .shot:nth-child(n):hover,
   .shot.is-active,
-  .shot.is-active:hover,
-  .preview-page,
-  .preview-page.is-turning,
-  .page-back,
-  .preview-frame.is-turning .preview-page,
-  .preview-frame.is-turning .page-back {
-    animation: none;
+  .shot.is-active:hover {
     transform: none;
     transition: none;
   }
