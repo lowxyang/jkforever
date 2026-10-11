@@ -75,6 +75,8 @@
   const preview = document.getElementById("preview");
   const previewFrame = document.getElementById("preview-frame");
   const previewPage = document.getElementById("preview-page");
+  const pageBack = document.getElementById("page-back");
+  const leftPage = document.getElementById("page-gallery");
   const previewImg = document.getElementById("preview-img");
   const underImg = document.getElementById("preview-under-img");
   const previewCaption = document.getElementById("preview-caption");
@@ -161,10 +163,11 @@
     preview.setAttribute("aria-label", `Enlarge ${photo.caption || "photo"}`);
     activeIndex = index;
     previewFrame.classList.remove("is-placeholder");
-    previewPage.classList.add("is-instant");
-    previewPage.classList.remove("is-turning");
+    previewFrame.classList.add("is-instant");
+    previewFrame.classList.remove("is-turning");
+    leftPage.classList.remove("is-turning");
     void previewPage.offsetWidth;
-    previewPage.classList.remove("is-instant");
+    previewFrame.classList.remove("is-instant");
     flipping = false;
     ignoreReelScroll = false;
   }
@@ -185,18 +188,18 @@
     const begin = () => {
       underImg.style.visibility = "";
       underImg.src = photo.src;
-      previewPage.classList.add("is-turning");
+      leftPage.classList.add("is-turning");
+      previewFrame.classList.add("is-turning");
       let settled = false;
       const finish = (event) => {
         if (settled) return;
-        if (event && event.target !== previewPage) return;
-        if (event && event.propertyName && event.propertyName !== "transform") return;
+        if (event && event.animationName !== "turn-back") return;
         settled = true;
-        previewPage.removeEventListener("transitionend", finish);
+        pageBack.removeEventListener("animationend", finish);
         finishTurn(index, photo);
       };
-      previewPage.addEventListener("transitionend", finish);
-      window.setTimeout(finish, 1400);
+      pageBack.addEventListener("animationend", finish);
+      window.setTimeout(finish, 1900);
     };
     incoming.onload = begin;
     incoming.onerror = begin;

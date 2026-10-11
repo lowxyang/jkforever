@@ -227,6 +227,11 @@ body {
   overflow: hidden;
 }
 
+.page--left.is-turning {
+  overflow: visible;
+  z-index: 4;
+}
+
 .page--right {
   padding: 1.6rem 1.6rem 2.4rem 1.85rem;
 }
@@ -257,30 +262,93 @@ body {
   inset: 0;
   overflow: hidden;
   background: #ddd3c4;
-  perspective: 1800px;
+}
+
+.preview-frame.is-turning {
+  overflow: visible;
+  z-index: 5;
 }
 
 .preview-under,
-.preview-page {
+.preview-page,
+.page-back,
+.page-shade {
   position: absolute;
   inset: 0;
 }
 
+.preview-page,
+.page-back {
+  transform-origin: right center;
+}
+
 .preview-page {
   z-index: 1;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  transition: transform 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
 }
 
-.preview-page.is-turning {
-  transform: rotateY(-180deg);
-  box-shadow: 16px 0 32px rgba(44, 36, 24, 0.32);
+.page-shade {
+  background: linear-gradient(270deg, rgba(44, 36, 24, 0.42), transparent 48%);
+  opacity: 0;
+  transition: opacity 0.7s ease;
 }
 
-.preview-page.is-instant {
-  transition: none;
+.preview-frame.is-turning .page-shade {
+  opacity: 1;
+}
+
+.page-back {
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(270deg, rgba(44, 36, 24, 0.2), rgba(255, 252, 247, 0.45) 10%, transparent 28%),
+    linear-gradient(90deg, #e4d8c8, #f7f1e8 46%, #efe4d6);
+  box-shadow: -20px 12px 34px rgba(44, 36, 24, 0.28);
+}
+
+.preview-frame.is-turning .preview-page {
+  animation: turn-front 0.72s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+.preview-frame.is-turning .page-back {
+  opacity: 1;
+  animation: turn-back 0.95s cubic-bezier(0.2, 0.7, 0.3, 1) 0.62s forwards;
+}
+
+.preview-frame.is-instant .preview-page,
+.preview-frame.is-instant .page-back {
+  animation: none;
+  transform: none;
+  opacity: 0;
+}
+
+.preview-frame.is-instant .preview-page {
+  opacity: 1;
+}
+
+@keyframes turn-front {
+  from {
+    transform: perspective(1200px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(1200px) rotateY(88deg);
+    box-shadow: 22px 12px 32px rgba(44, 36, 24, 0.32);
+  }
+}
+
+@keyframes turn-back {
+  0% {
+    transform: perspective(1200px) rotateY(92deg);
+    opacity: 1;
+  }
+  72% {
+    transform: perspective(1200px) rotateY(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1200px) rotateY(180deg);
+    opacity: 0;
+  }
 }
 
 .preview-frame img {
@@ -681,7 +749,11 @@ body {
   .shot.is-active,
   .shot.is-active:hover,
   .preview-page,
-  .preview-page.is-turning {
+  .preview-page.is-turning,
+  .page-back,
+  .preview-frame.is-turning .preview-page,
+  .preview-frame.is-turning .page-back {
+    animation: none;
     transform: none;
     transition: none;
   }
