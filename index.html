@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=26" />
+    <link rel="stylesheet" href="css/styles.css?v=27" />
   </head>
   <body>
     <div class="gate" id="gate">
@@ -119,7 +119,16 @@
       </article>
     </main>
 
-    <button class="mute" id="mute" type="button" aria-pressed="false">Sound on</button>
+    <button class="mute" id="mute" type="button" aria-label="Mute music" title="Mute music">
+      <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor" stroke="none" />
+        <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+      </svg>
+      <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor" stroke="none" />
+        <path d="M16 9.5l5 5M21 9.5l-5 5" />
+      </svg>
+    </button>
     <audio id="music" loop preload="none"></audio>
 
     <div class="lightbox" id="lightbox" hidden>
@@ -137,6 +146,6 @@
     </div>
 
     <script src="js/config.js?v=15"></script>
-    <script src="js/app.js?v=28"></script>
+    <script src="js/app.js?v=29"></script>
   </body>
 </html>

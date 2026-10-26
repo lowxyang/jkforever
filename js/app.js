@@ -363,9 +363,17 @@
     if (!cfg.musicSrc) return;
     music.src = cfg.musicSrc;
     mute.classList.add("is-visible");
+    setMuteState(false);
     music.play().catch(() => {
-      mute.textContent = "Tap for music";
+      setMuteState(true);
     });
+  }
+
+  function setMuteState(off) {
+    mute.classList.toggle("is-off", off);
+    const label = off ? "Play music" : "Mute music";
+    mute.setAttribute("aria-label", label);
+    mute.title = label;
   }
 
   function openInvitation() {
@@ -378,10 +386,14 @@
   }
 
   mute.addEventListener("click", () => {
+    if (music.paused) {
+      music.muted = false;
+      music.play().catch(() => {});
+      setMuteState(false);
+      return;
+    }
     music.muted = !music.muted;
-    mute.textContent = music.muted ? "Sound off" : "Sound on";
-    mute.setAttribute("aria-pressed", String(!music.muted));
-    if (music.paused) music.play().catch(() => {});
+    setMuteState(music.muted);
   });
 
   gateForm.addEventListener("submit", async (event) => {
