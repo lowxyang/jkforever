@@ -79,6 +79,11 @@
       )
       .join("");
 
+    document.getElementById("attire").innerHTML = (cfg.attire || [])
+      .map((line) => `<p>${line}</p>`)
+      .join("");
+    document.getElementById("attire-panel").hidden = !(cfg.attire || []).length;
+
     const faqs = document.getElementById("faqs");
     faqs.innerHTML = (cfg.faqs || [])
       .map(
