@@ -49,7 +49,11 @@ window.WEDDING = {
       label: "Dinner reception",
       image: "assets/decor/dinner.png",
     },
-    { time: "10:00", label: "Partyyy", icon: "party" },
+    {
+      time: "10:00",
+      label: "Partyyy",
+      image: "assets/decor/party.png",
+    },
   ],
   closing: [
     "Thank you for all the love and support you've shown us over the years. We feel so lucky to share this special moment with the people who mean the most to us.",
