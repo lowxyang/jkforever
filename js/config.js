@@ -24,7 +24,7 @@ window.WEDDING = {
   },
   rsvpBy: "1 May 2027",
   dressCode: "",
-  story: "Conrad Resort, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
+  story: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
     { time: "10:00", label: "Tea Ceremony (Family / Wedding party only)" },
     { time: "4:30", label: "Wedding ceremony" },
