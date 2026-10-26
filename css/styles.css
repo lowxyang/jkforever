@@ -650,8 +650,41 @@ body {
 }
 
 .rsvp textarea {
-  min-height: 5rem;
+  min-height: 3.6rem;
   resize: vertical;
+}
+
+.rsvp .choices {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 0.3rem;
+  padding: 0;
+  border: 0;
+}
+
+.rsvp .choice {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+
+.rsvp .choice input {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.rsvp .choice span {
+  margin: 0;
+  font-size: 1.08rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink);
 }
 
 .rsvp-status {

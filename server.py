@@ -11,8 +11,8 @@ from openpyxl.utils import get_column_letter
 
 ROOT = Path(__file__).resolve().parent
 WORKBOOK = ROOT / "RSVPs.xlsx"
-HEADERS = ["Timestamp", "Name", "Attending", "Guests", "Diet", "Note", "Email"]
-WIDTHS = [22, 28, 22, 12, 32, 40, 32]
+HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"]
+WIDTHS = [22, 22, 36, 32, 36]
 
 
 class InvitationHandler(SimpleHTTPRequestHandler):
@@ -38,26 +38,18 @@ class InvitationHandler(SimpleHTTPRequestHandler):
             self.respond(400, {"ok": False, "error": "Invalid RSVP"})
             return
 
-        name = str(data.get("name", "")).strip()
+        attendees = str(data.get("attendees") or data.get("name") or "").strip()
         attending = str(data.get("attending", "")).strip().lower()
-        if not name or attending not in {"yes", "no"}:
-            self.respond(400, {"ok": False, "error": "Name and attendance are required."})
+        if not attendees or attending not in {"yes", "no"}:
+            self.respond(400, {"ok": False, "error": "Attendee name(s) and attendance are required."})
             return
-
-        guests = str(data.get("guests", "")).strip()
-        try:
-            guests_value = int(guests) if guests else ""
-        except ValueError:
-            guests_value = guests
 
         row = [
             str(data.get("submittedAt") or datetime.now(timezone.utc).isoformat()),
-            name,
-            "Joyfully accepts" if attending == "yes" else "Regretfully declines",
-            guests_value,
+            "Joyfully accept" if attending == "yes" else "Regretfully decline",
+            attendees,
             str(data.get("diet", "")).strip(),
-            str(data.get("note", "")).strip(),
-            str(data.get("email", "")).strip(),
+            str(data.get("contact") or data.get("email") or "").strip(),
         ]
         try:
             append_rsvp(row)
@@ -75,7 +67,16 @@ class InvitationHandler(SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
 
+def has_current_layout(path):
+    sheet = load_workbook(path).active
+    return [sheet.cell(1, index).value for index in range(1, len(HEADERS) + 1)] == HEADERS
+
+
 def append_rsvp(row):
+    if WORKBOOK.exists() and not has_current_layout(WORKBOOK):
+        # The questions changed: keep the old file and start a fresh one.
+        stamp = datetime.now().strftime("%Y-%m-%d %H-%M")
+        WORKBOOK.rename(WORKBOOK.with_name(f"RSVPs (old layout {stamp}).xlsx"))
     if WORKBOOK.exists():
         workbook = load_workbook(WORKBOOK)
         sheet = workbook.active
@@ -87,10 +88,6 @@ def append_rsvp(row):
         sheet.freeze_panes = "A2"
         for index, width in enumerate(WIDTHS, start=1):
             sheet.column_dimensions[get_column_letter(index)].width = width
-    if sheet["A1"].value != "Timestamp":
-        sheet.insert_rows(1)
-        for index, header in enumerate(HEADERS, start=1):
-            sheet.cell(1, index, header)
     sheet.append(row)
     workbook.save(WORKBOOK)
 

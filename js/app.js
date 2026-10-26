@@ -405,6 +405,10 @@
     rsvpStatus.textContent = "Sending…";
     const data = Object.fromEntries(new FormData(rsvpForm));
     data.submittedAt = new Date().toISOString();
+    // `name` and `email` mirror the new fields so the Google Sheet script
+    // that is already deployed keeps recording replies until it is updated.
+    data.name = data.attendees;
+    data.email = data.contact;
 
     const endpoint = cfg.sheetsEndpoint || "/api/rsvp";
     const localSheet = endpoint.startsWith("/");

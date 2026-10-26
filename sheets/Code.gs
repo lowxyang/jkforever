@@ -9,20 +9,26 @@
  * 4. Authorize the script, then copy the web app URL (it ends in /exec)
  *    into js/config.js → sheetsEndpoint.
  *
+ * Already deployed? After pasting this version, use
+ * Deploy → Manage deployments → pencil icon → Version: New version → Deploy.
+ * The URL stays the same.
+ *
  * The script creates an "RSVPs" tab and the header row if they are missing.
+ * If the tab still has the older questions, it is renamed "RSVPs (old layout …)"
+ * and a fresh "RSVPs" tab is started.
  * Open the Google Sheet in Excel, or File → Download → Microsoft Excel.
  */
+const HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"];
+
 function doPost(e) {
   const sheet = getRsvpSheet_();
   const data = readRsvp_(e);
   sheet.appendRow([
     data.submittedAt || new Date().toISOString(),
-    data.name || "",
     attendingLabel_(data.attending),
-    data.guests || "",
+    data.attendees || data.name || "",
     data.diet || "",
-    data.note || "",
-    data.email || "",
+    data.contact || data.email || "",
   ]);
   return json_({ ok: true });
 }
@@ -34,15 +40,22 @@ function doGet() {
 function getRsvpSheet_() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName("RSVPs");
+  if (sheet && sheet.getLastRow() > 0 && !hasCurrentLayout_(sheet)) {
+    const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH-mm");
+    sheet.setName("RSVPs (old layout " + stamp + ")");
+    sheet = null;
+  }
   if (!sheet) sheet = spreadsheet.insertSheet("RSVPs");
-  if (sheet.getRange(1, 1).getValue() !== "Timestamp") {
-    sheet.insertRowBefore(1);
-    sheet
-      .getRange(1, 1, 1, 7)
-      .setValues([["Timestamp", "Name", "Attending", "Guests", "Diet", "Note", "Email"]]);
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
     sheet.setFrozenRows(1);
   }
   return sheet;
+}
+
+function hasCurrentLayout_(sheet) {
+  const row = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+  return HEADERS.every((header, index) => row[index] === header);
 }
 
 function readRsvp_(e) {
@@ -56,19 +69,17 @@ function readRsvp_(e) {
   const fields = (e && e.parameter) || {};
   return {
     submittedAt: fields.submittedAt,
-    name: fields.name,
     attending: fields.attending,
-    guests: fields.guests,
+    attendees: fields.attendees || fields.name,
     diet: fields.diet,
-    note: fields.note,
-    email: fields.email,
+    contact: fields.contact || fields.email,
   };
 }
 
 function attendingLabel_(value) {
   const answer = String(value || "").toLowerCase();
-  if (answer === "yes") return "Joyfully accepts";
-  if (answer === "no") return "Regretfully declines";
+  if (answer === "yes") return "Joyfully accept";
+  if (answer === "no") return "Regretfully decline";
   return value || "";
 }
 

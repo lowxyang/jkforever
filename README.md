@@ -32,7 +32,7 @@ python3 server.py
 
 Open `RSVPs.xlsx` in Excel. Close it before someone submits, or the save can fail while the file is open.
 
-GitHub Pages cannot write that file. For the public site, create a Google Sheet (tab `RSVPs`, headers Timestamp, Name, Attending, Guests, Diet, Note, Email), paste `sheets/Code.gs` into **Extensions → Apps Script**, deploy it as a web app (execute as you, access: anyone), and put that URL in `sheetsEndpoint`. Download the Google Sheet as Excel any time (**File → Download → Microsoft Excel**).
+GitHub Pages cannot write that file. For the public site, create a Google Sheet (tab `RSVPs`, headers Timestamp, Attending, Attendee(s), Dietary requirements, Email / WhatsApp), paste `sheets/Code.gs` into **Extensions → Apps Script**, deploy it as a web app (execute as you, access: anyone), and put that URL in `sheetsEndpoint`. Download the Google Sheet as Excel any time (**File → Download → Microsoft Excel**).
 
 ## Preview locally
 
