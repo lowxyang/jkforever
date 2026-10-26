@@ -653,6 +653,18 @@ body {
   margin-bottom: 0.4rem;
 }
 
+.panel .faq-footnote {
+  margin: 0.6rem 0 0;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.faq-footnote a {
+  color: inherit;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 0.15em;
+}
+
 .rates {
   list-style: none;
   margin: 0;

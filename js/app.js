@@ -96,6 +96,14 @@
                     .join("")}</ul>`
                 : ""
             }
+            ${
+              faq.footnote
+                ? `<p class="faq-footnote">${faq.footnote.replace(
+                    /\+\d+/g,
+                    (phone) => `<a href="tel:${phone}">${phone}</a>`
+                  )}</p>`
+                : ""
+            }
           </div>`
       )
       .join("");

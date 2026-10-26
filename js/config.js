@@ -45,6 +45,8 @@ window.WEDDING = {
         { label: "Conrad Suite", value: "IDR 4,300,000 net per night" },
         { label: "Ocean Front Suite", value: "IDR 5,000,000 net per night" },
       ],
+      footnote:
+        "*Room rates may change in 2027. Please get in touch directly with Conrad Bali at +6281138002476",
     },
   ],
   /** SHA-256 of "forever" — change before sharing the real link. */
