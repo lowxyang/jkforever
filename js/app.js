@@ -79,6 +79,28 @@
       )
       .join("");
 
+    const faqs = document.getElementById("faqs");
+    faqs.innerHTML = (cfg.faqs || [])
+      .map(
+        (faq) => `
+          <div class="faq">
+            <h3>${faq.question}</h3>
+            ${faq.note ? `<p class="faq-note">${faq.note}</p>` : ""}
+            ${
+              faq.rates
+                ? `<ul class="rates">${faq.rates
+                    .map(
+                      (rate) =>
+                        `<li><span>${rate.label}</span><span class="rate">${rate.value}</span></li>`
+                    )
+                    .join("")}</ul>`
+                : ""
+            }
+          </div>`
+      )
+      .join("");
+    document.getElementById("faqs-panel").hidden = !(cfg.faqs || []).length;
+
     if (cfg.backgroundImage) {
       document.documentElement.style.backgroundImage = `url("${cfg.backgroundImage}")`;
     }

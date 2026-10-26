@@ -635,6 +635,60 @@ body {
   color: var(--gold);
 }
 
+.panel[hidden] {
+  display: none;
+}
+
+.faq h3 {
+  margin: 0 0 0.2rem;
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+.faq-note {
+  margin-bottom: 0.4rem;
+}
+
+.rates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rates li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  font-size: 1.08rem;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.18);
+}
+
+.rates li:last-child {
+  border-bottom: 0;
+}
+
+.rates .rate {
+  color: var(--gold);
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .rates li {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .rates .rate {
+    text-align: left;
+  }
+}
+
 .rsvp {
   display: grid;
   gap: 0.7rem;

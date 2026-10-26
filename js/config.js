@@ -34,6 +34,19 @@ window.WEDDING = {
     { time: "7:00", label: "Dinner reception" },
     { time: "10:00", label: "Partyyy" },
   ],
+  faqs: [
+    {
+      question: "Where can I stay?",
+      note: "Room rates at Conrad Bali (on venue)",
+      rates: [
+        { label: "Deluxe Garden Room", value: "IDR 2,800,000 net per night" },
+        { label: "Deluxe Pool View", value: "IDR 3,000,000 net per night" },
+        { label: "Deluxe Ocean Front", value: "IDR 3,450,000 net per night" },
+        { label: "Conrad Suite", value: "IDR 4,300,000 net per night" },
+        { label: "Ocean Front Suite", value: "IDR 5,000,000 net per night" },
+      ],
+    },
+  ],
   /** SHA-256 of "forever" — change before sharing the real link. */
   passcodeHash:
     "2070f725ff1c765b73c498de52bc419377979691f6100de3ed99794aeb40d988",
