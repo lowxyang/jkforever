@@ -22,7 +22,7 @@ window.WEDDING = {
     name: "",
     address: "",
   },
-  rsvpBy: "1 May 2027",
+  rsvpBy: "28th February 2027",
   dressCode: "",
   story: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
