@@ -67,6 +67,7 @@
     document.getElementById("rsvp-by").textContent =
       `Please reply by ${cfg.rsvpBy}.`;
 
+    document.getElementById("schedule-date").textContent = cfg.date;
     const schedule = document.getElementById("schedule");
     schedule.innerHTML = cfg.schedule
       .map(

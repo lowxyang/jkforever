@@ -26,10 +26,11 @@ window.WEDDING = {
   dressCode: "",
   story: "Conrad Resort, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
-    { time: "3:30 PM", label: "Guests arrive" },
-    { time: "4:00 PM", label: "Ceremony" },
-    { time: "5:00 PM", label: "Drinks & photographs" },
-    { time: "7:00 PM", label: "Dinner & dancing" },
+    { time: "10:00", label: "Tea Ceremony (Family / Wedding party only)" },
+    { time: "4:30", label: "Wedding ceremony" },
+    { time: "5:30", label: "Pre-Dinner cocktails" },
+    { time: "7:00", label: "Dinner reception" },
+    { time: "10:00", label: "Partyyy" },
   ],
   /** SHA-256 of "forever" — change before sharing the real link. */
   passcodeHash:
