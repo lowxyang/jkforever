@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=25" />
+    <link rel="stylesheet" href="css/styles.css?v=26" />
   </head>
   <body>
     <div class="gate" id="gate">
@@ -91,17 +91,13 @@
             <h2>Will you join us?</h2>
             <p id="rsvp-by"></p>
             <form class="rsvp" id="rsvp-form">
-              <fieldset class="choices">
-                <legend class="sr-only">Will you join us?</legend>
-                <label class="choice">
-                  <input type="radio" name="attending" value="yes" required />
-                  <span>Joyfully accept</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="attending" value="no" />
-                  <span>Regretfully decline</span>
-                </label>
-              </fieldset>
+              <label>
+                <span>Will you attend?</span>
+                <select name="attending" required>
+                  <option value="yes">Joyfully accept</option>
+                  <option value="no">Regretfully decline</option>
+                </select>
+              </label>
               <label>
                 <span>Name of attendee(s)</span>
                 <textarea name="attendees" required></textarea>
