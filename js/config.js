@@ -70,7 +70,7 @@ window.WEDDING = {
     {
       question: "Visa & travel",
       lines: [
-        "Please note Indonesia Visa and travel requirements for your specific passport, you don't want to be stopped at the gate!",
+        "Please note Indonesia Visa and travel requirements for your specific passport, we don't want you being stopped at the gate!",
       ],
     },
     {
