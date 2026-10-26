@@ -50,9 +50,12 @@
     const tagline = document.getElementById("tagline");
     tagline.textContent = cfg.tagline || "";
     tagline.hidden = !cfg.tagline;
-    document.getElementById("when").textContent = cfg.time
-      ? `${cfg.date} · ${cfg.time}`
-      : cfg.date;
+    const whenText = cfg.time ? `${cfg.date} · ${cfg.time}` : cfg.date;
+    document.getElementById("when").textContent = whenText;
+    const nick = cfg.names.nickname ? ` (${cfg.names.nickname})` : "";
+    document.getElementById("preview-names").textContent =
+      `${cfg.names.one} ${cfg.names.and} ${cfg.names.two}${nick}`;
+    document.getElementById("preview-date").textContent = whenText;
     const where = document.getElementById("where");
     const place = [cfg.venue.name, cfg.venue.address].filter(Boolean).join(", ");
     where.textContent = place;
