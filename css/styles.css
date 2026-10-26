@@ -6,6 +6,7 @@
   --gold: #b08d57;
   --gold-soft: #d4c0a1;
   --sage: #6d7a6c;
+  --olive: #5c5e40;
   --blush: #c9a9a0;
   --shadow: 0 24px 60px rgba(44, 36, 24, 0.22);
   --script: "Great Vibes", cursive;
@@ -632,7 +633,7 @@ body {
 
 .schedule time {
   min-width: 5.5rem;
-  color: var(--gold);
+  color: var(--olive);
 }
 
 .panel[hidden] {
@@ -685,7 +686,7 @@ body {
 }
 
 .rates .rate {
-  color: var(--gold);
+  color: var(--olive);
   text-align: right;
   white-space: nowrap;
 }

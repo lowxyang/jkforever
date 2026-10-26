@@ -36,7 +36,7 @@ window.WEDDING = {
   ],
   faqs: [
     {
-      question: "Where can I stay?",
+      question: "If you want to extend the stay at Conrad Bali",
       note: "Room rates at Conrad Bali (on venue)",
       rates: [
         { label: "Deluxe Garden Room", value: "IDR 2,800,000 net per night" },
