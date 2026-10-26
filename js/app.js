@@ -12,6 +12,26 @@
   const rsvpForm = document.getElementById("rsvp-form");
   const rsvpStatus = document.getElementById("rsvp-status");
 
+  const iconSvg = (paths) =>
+    `<svg class="event-icon" viewBox="0 0 64 64" aria-hidden="true">${paths}</svg>`;
+  const eventIcons = {
+    tea: iconSvg(
+      '<path d="M8 44c4 6 12 8 24 8s20-2 24-8z"/><path d="M14 26h36c0 10-4 18-18 18s-18-8-18-18z"/><path d="M50 29c6 0 8 3 7 7s-5 5-9 5"/><path d="M24 20c-3-3 3-5 0-9M34 20c-3-3 3-5 0-9"/>'
+    ),
+    rings: iconSvg(
+      '<circle cx="24" cy="40" r="13"/><circle cx="40" cy="40" r="13"/><path d="M32 8l6 7-6 9-6-9z"/><path d="M26 15h12"/>'
+    ),
+    cocktail: iconSvg(
+      '<path d="M10 20h44L32 40z"/><path d="M32 40v16M22 56h20"/><path d="M42 8L30 28"/><circle cx="44" cy="10" r="3.5"/>'
+    ),
+    dinner: iconSvg(
+      '<path d="M10 44a22 22 0 0 1 44 0z"/><circle cx="32" cy="17" r="3.5"/><path d="M6 49h52"/><path d="M20 34c2-5 6-8 10-9"/>'
+    ),
+    party: iconSvg(
+      '<circle cx="32" cy="36" r="16"/><ellipse cx="32" cy="36" rx="16" ry="6"/><ellipse cx="32" cy="36" rx="6" ry="16"/><path d="M16 36h32M32 20v32M32 6v14"/><path d="M52 12v9M47.5 16.5h9"/>'
+    ),
+  };
+
   function coupleLine() {
     const nick = cfg.names.nickname
       ? ` <span class="couple-nick">(${cfg.names.nickname})</span>`
@@ -73,10 +93,12 @@
     document.getElementById("schedule-date").textContent = cfg.date;
     const schedule = document.getElementById("schedule");
     schedule.innerHTML = cfg.schedule
-      .map(
-        (item) =>
-          `<li><time>${item.time}</time><span>${item.label}</span></li>`
-      )
+      .map((item) => {
+        const parts = item.label.match(/^(.*?)\s*\((.*)\)\s*$/);
+        const name = parts ? parts[1] : item.label;
+        const note = parts ? `<span class="event-note">${parts[2]}</span>` : "";
+        return `<li>${eventIcons[item.icon] || ""}<time>${item.time}</time><span class="event-name">${name}</span>${note}</li>`;
+      })
       .join("");
 
     const closing = document.getElementById("closing");

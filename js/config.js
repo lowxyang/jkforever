@@ -28,11 +28,11 @@ window.WEDDING = {
   dressCode: "",
   story: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
-    { time: "10:00", label: "Tea Ceremony (Family / Wedding party only)" },
-    { time: "4:30", label: "Wedding ceremony" },
-    { time: "5:30", label: "Pre-Dinner cocktails" },
-    { time: "7:00", label: "Dinner reception" },
-    { time: "10:00", label: "Partyyy" },
+    { time: "10:00", label: "Tea Ceremony (Family / Wedding party only)", icon: "tea" },
+    { time: "4:30", label: "Wedding ceremony", icon: "rings" },
+    { time: "5:30", label: "Pre-Dinner cocktails", icon: "cocktail" },
+    { time: "7:00", label: "Dinner reception", icon: "dinner" },
+    { time: "10:00", label: "Partyyy", icon: "party" },
   ],
   closing: [
     "Thank you for all the love and support you've shown us over the years. We feel so lucky to share this special moment with the people who mean the most to us.",
