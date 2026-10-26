@@ -39,7 +39,11 @@ window.WEDDING = {
       label: "Wedding ceremony",
       image: "assets/decor/wedding-arch.png",
     },
-    { time: "5:30", label: "Pre-Dinner cocktails", icon: "cocktail" },
+    {
+      time: "5:30",
+      label: "Pre-Dinner cocktails",
+      image: "assets/decor/cocktail.png",
+    },
     { time: "7:00", label: "Dinner reception", icon: "dinner" },
     { time: "10:00", label: "Partyyy", icon: "party" },
   ],
