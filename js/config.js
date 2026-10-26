@@ -23,9 +23,8 @@ window.WEDDING = {
     address: "",
   },
   rsvpBy: "1 May 2027",
-  dressCode: "Garden formal",
-  story:
-    "A few words about how you met, why this place matters, or what the day will feel like. Replace this paragraph with your own.",
+  dressCode: "",
+  story: "Conrad Resort, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
     { time: "3:30 PM", label: "Guests arrive" },
     { time: "4:00 PM", label: "Ceremony" },

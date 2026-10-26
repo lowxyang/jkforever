@@ -61,7 +61,9 @@
     where.textContent = place;
     where.hidden = !place;
     document.getElementById("story").textContent = cfg.story;
-    document.getElementById("dress").textContent = `Dress: ${cfg.dressCode}`;
+    const dress = document.getElementById("dress");
+    dress.textContent = cfg.dressCode ? `Dress: ${cfg.dressCode}` : "";
+    dress.hidden = !cfg.dressCode;
     document.getElementById("rsvp-by").textContent =
       `Please reply by ${cfg.rsvpBy}.`;
 
