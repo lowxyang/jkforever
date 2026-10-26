@@ -43,6 +43,12 @@ window.WEDDING = {
       ],
     },
     {
+      question: "Visa & travel",
+      lines: [
+        "Please note Indonesia Visa and travel requirements for your specific passport, you don't want to be stopped at the gate!",
+      ],
+    },
+    {
       question: "If you wish to extend the stay at Conrad Bali",
       note: "Room rates at Conrad Bali (on venue)",
       rates: [
