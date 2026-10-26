@@ -49,7 +49,7 @@ window.WEDDING = {
       ],
     },
     {
-      question: "If you wish to extend the stay at Conrad Bali",
+      question: "If you wish to extend your stay at Conrad Bali",
       note: "Room rates at Conrad Bali (on venue)",
       rates: [
         { label: "Deluxe Garden Room", value: "IDR 2,800,000 net per night" },

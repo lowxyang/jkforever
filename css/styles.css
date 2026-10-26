@@ -6,7 +6,7 @@
   --gold: #b08d57;
   --gold-soft: #d4c0a1;
   --sage: #6d7a6c;
-  --olive: #8f9e57;
+  --olive: var(--sage);
   --blush: #c9a9a0;
   --shadow: 0 24px 60px rgba(44, 36, 24, 0.22);
   --script: "Great Vibes", cursive;
