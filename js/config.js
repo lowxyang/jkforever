@@ -39,7 +39,7 @@ window.WEDDING = {
       question: "Dress code & footwear",
       lines: [
         "Dress up as you wish - We have no strict dress code!",
-        "Footwear - However we recommend choosing footwear suitable for a beachside wedding ceremony",
+        "However, we recommend choosing footwear suitable for a beachside wedding ceremony",
       ],
     },
     {
