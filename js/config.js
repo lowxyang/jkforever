@@ -34,6 +34,10 @@ window.WEDDING = {
     { time: "7:00", label: "Dinner reception" },
     { time: "10:00", label: "Partyyy" },
   ],
+  closing: [
+    "Thank you for all the love and support you've shown us over the years. We feel so lucky to share this special moment with the people who mean the most to us.",
+    "We can't wait to see you on our wedding day!",
+  ],
   faqs: [
     {
       question: "Dress code & footwear",

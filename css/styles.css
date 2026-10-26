@@ -650,6 +650,30 @@ body {
   color: var(--sage);
 }
 
+.closing {
+  padding: 1.4rem 0 0.4rem;
+  text-align: center;
+}
+
+.closing[hidden] {
+  display: none;
+}
+
+.closing p {
+  margin: 0 0 0.7rem;
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.closing p:last-child {
+  margin-bottom: 0;
+  font-family: var(--script);
+  font-size: 1.7rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
 .faq + .faq {
   margin-top: 1.1rem;
 }

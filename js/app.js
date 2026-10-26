@@ -79,6 +79,10 @@
       )
       .join("");
 
+    const closing = document.getElementById("closing");
+    closing.innerHTML = (cfg.closing || []).map((line) => `<p>${line}</p>`).join("");
+    closing.hidden = !(cfg.closing || []).length;
+
     const faqs = document.getElementById("faqs");
     faqs.innerHTML = (cfg.faqs || [])
       .map(
