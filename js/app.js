@@ -92,13 +92,22 @@
 
     document.getElementById("schedule-date").textContent = cfg.date;
     const schedule = document.getElementById("schedule");
+    const eventHtml = (item) => {
+      const parts = item.label.match(/^(.*?)\s*\((.*)\)\s*$/);
+      const name = parts ? parts[1] : item.label;
+      const note = parts ? `<span class="event-note">${parts[2]}</span>` : "";
+      const art = item.image
+        ? `<img class="event-art" src="${item.image}" alt="" />`
+        : eventIcons[item.icon] || "";
+      return `${art}<time>${item.time}</time><span class="event-name">${name}</span>${note}`;
+    };
+    const feature = document.getElementById("schedule-feature");
+    const featured = cfg.schedule.filter((item) => item.feature);
+    feature.innerHTML = featured.map((item) => `<div>${eventHtml(item)}</div>`).join("");
+    feature.hidden = !featured.length;
     schedule.innerHTML = cfg.schedule
-      .map((item) => {
-        const parts = item.label.match(/^(.*?)\s*\((.*)\)\s*$/);
-        const name = parts ? parts[1] : item.label;
-        const note = parts ? `<span class="event-note">${parts[2]}</span>` : "";
-        return `<li>${eventIcons[item.icon] || ""}<time>${item.time}</time><span class="event-name">${name}</span>${note}</li>`;
-      })
+      .filter((item) => !item.feature)
+      .map((item) => `<li>${eventHtml(item)}</li>`)
       .join("");
 
     const closing = document.getElementById("closing");

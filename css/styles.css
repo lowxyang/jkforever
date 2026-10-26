@@ -622,17 +622,35 @@ body {
   text-align: center;
 }
 
-.ornament {
+.event-feature {
+  margin: 0.8rem 0 0;
+}
+
+.event-feature[hidden] {
+  display: none;
+}
+
+.event-feature > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.event-art {
   display: block;
-  width: 8.5rem;
+  width: 9rem;
+  max-width: 70%;
   height: auto;
-  margin: 0 auto 0.7rem;
-  fill: none;
-  stroke: var(--ink-soft);
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.8;
+  margin-bottom: 0.45rem;
+}
+
+.divider {
+  display: block;
+  width: 11rem;
+  max-width: 80%;
+  height: auto;
+  margin: 1.1rem auto 0;
 }
 
 .schedule {
@@ -646,7 +664,7 @@ body {
 }
 
 .schedule li {
-  flex: 0 0 33.333%;
+  flex: 0 0 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -666,9 +684,14 @@ body {
   stroke-linejoin: round;
 }
 
+.event-feature time,
 .schedule time {
   font-size: 1.15rem;
   letter-spacing: 0.06em;
+  color: var(--olive);
+}
+
+.event-feature time {
   color: var(--olive);
 }
 
