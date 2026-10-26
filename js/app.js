@@ -68,7 +68,7 @@
     hotelNote.textContent = cfg.hotelNote || "";
     hotelNote.hidden = !cfg.hotelNote;
     document.getElementById("rsvp-by").textContent =
-      `RSVP by ${cfg.rsvpBy}`;
+      `Please confirm your attendance before ${cfg.rsvpBy}`;
 
     document.getElementById("schedule-date").textContent = cfg.date;
     const schedule = document.getElementById("schedule");
