@@ -34,7 +34,11 @@ window.WEDDING = {
       image: "assets/decor/tea-ceremony.png",
       feature: true,
     },
-    { time: "4:30", label: "Wedding ceremony", icon: "rings" },
+    {
+      time: "4:30",
+      label: "Wedding ceremony",
+      image: "assets/decor/wedding-arch.png",
+    },
     { time: "5:30", label: "Pre-Dinner cocktails", icon: "cocktail" },
     { time: "7:00", label: "Dinner reception", icon: "dinner" },
     { time: "10:00", label: "Partyyy", icon: "party" },
