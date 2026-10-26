@@ -47,10 +47,16 @@
       : `${cfg.names.one} & ${cfg.names.two}`;
     document.getElementById("gate-names").innerHTML = coupleLine();
     document.getElementById("invite-names").innerHTML = coupleLine();
-    document.getElementById("tagline").textContent = cfg.tagline;
-    document.getElementById("when").textContent = `${cfg.date} · ${cfg.time}`;
-    document.getElementById("where").textContent =
-      `${cfg.venue.name}, ${cfg.venue.address}`;
+    const tagline = document.getElementById("tagline");
+    tagline.textContent = cfg.tagline || "";
+    tagline.hidden = !cfg.tagline;
+    document.getElementById("when").textContent = cfg.time
+      ? `${cfg.date} · ${cfg.time}`
+      : cfg.date;
+    const where = document.getElementById("where");
+    const place = [cfg.venue.name, cfg.venue.address].filter(Boolean).join(", ");
+    where.textContent = place;
+    where.hidden = !place;
     document.getElementById("story").textContent = cfg.story;
     document.getElementById("dress").textContent = `Dress: ${cfg.dressCode}`;
     document.getElementById("rsvp-by").textContent =
