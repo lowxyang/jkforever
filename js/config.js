@@ -22,6 +22,8 @@ window.WEDDING = {
     name: "",
     address: "",
   },
+  hotelNote:
+    "As our guests, we are delighted to provide a complimentary two-night hotel stay at the Conrad Bali, from 28th May to 30th May. We look forward to celebrating our special occasion with you!",
   rsvpBy: "28th February 2027",
   dressCode: "",
   story: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",

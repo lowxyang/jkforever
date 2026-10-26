@@ -64,6 +64,9 @@
     const dress = document.getElementById("dress");
     dress.textContent = cfg.dressCode ? `Dress: ${cfg.dressCode}` : "";
     dress.hidden = !cfg.dressCode;
+    const hotelNote = document.getElementById("hotel-note");
+    hotelNote.textContent = cfg.hotelNote || "";
+    hotelNote.hidden = !cfg.hotelNote;
     document.getElementById("rsvp-by").textContent =
       `Please reply by ${cfg.rsvpBy}.`;
 
