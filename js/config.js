@@ -34,13 +34,16 @@ window.WEDDING = {
     { time: "7:00", label: "Dinner reception" },
     { time: "10:00", label: "Partyyy" },
   ],
-  attire: [
-    "Dress up as you wish - We have no strict dress code!",
-    "Footwear - However we recommend choosing footwear suitable for a beachside wedding ceremony",
-  ],
   faqs: [
     {
-      question: "If you want to extend the stay at Conrad Bali",
+      question: "Dress code & footwear",
+      lines: [
+        "Dress up as you wish - We have no strict dress code!",
+        "Footwear - However we recommend choosing footwear suitable for a beachside wedding ceremony",
+      ],
+    },
+    {
+      question: "If you wish to extend the stay at Conrad Bali",
       note: "Room rates at Conrad Bali (on venue)",
       rates: [
         { label: "Deluxe Garden Room", value: "IDR 2,800,000 net per night" },

@@ -650,6 +650,10 @@ body {
   color: var(--sage);
 }
 
+.faq + .faq {
+  margin-top: 1.1rem;
+}
+
 .faq-note {
   margin-bottom: 0.4rem;
 }
