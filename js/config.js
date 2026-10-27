@@ -66,7 +66,14 @@ window.WEDDING = {
     ],
     // Text shown when a currency is tapped on the Wishing Well page.
     currencies: [
-      { code: "AUD", lines: [] },
+      {
+        code: "AUD",
+        lines: [
+          "Name: Khine Tin Zar Thu",
+          "BSB code: 774-001",
+          "Account number: 242406705",
+        ],
+      },
       { code: "USD", lines: [] },
       { code: "GBP", lines: [] },
       { code: "MYR", lines: [] },
