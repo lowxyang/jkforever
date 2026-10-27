@@ -158,34 +158,46 @@
     closing.hidden = !(cfg.closing || []).length;
 
     const faqs = document.getElementById("faqs");
+    const faqRates = (faq) =>
+      faq.rates
+        ? `<ul class="rates">${faq.rates
+            .map(
+              (rate) =>
+                `<li><span>${rate.label}</span><span class="rate">${rate.value}</span></li>`
+            )
+            .join("")}</ul>`
+        : "";
+    const faqFootnote = (faq) =>
+      faq.footnote
+        ? `<p class="faq-footnote">${faq.footnote.replace(
+            /\+\d+/g,
+            (phone) => `<a href="tel:${phone}">${phone}</a>`
+          )}</p>`
+        : "";
     faqs.innerHTML = (cfg.faqs || [])
-      .map(
-        (faq) => `
+      .map((faq, index) => {
+        const expandable = faq.note && (faq.rates || faq.footnote);
+        return `
           <div class="faq">
             <h3>${faq.question}</h3>
             ${(faq.lines || []).map((line) => `<p>${line}</p>`).join("")}
-            ${faq.note ? `<p class="faq-note">${faq.note}</p>` : ""}
             ${
-              faq.rates
-                ? `<ul class="rates">${faq.rates
-                    .map(
-                      (rate) =>
-                        `<li><span>${rate.label}</span><span class="rate">${rate.value}</span></li>`
-                    )
-                    .join("")}</ul>`
-                : ""
+              expandable
+                ? `<button type="button" class="currency-btn faq-toggle" aria-expanded="false" aria-controls="faq-more-${index}">${faq.note}</button>
+                   <div class="faq-more" id="faq-more-${index}" hidden>${faqRates(faq)}${faqFootnote(faq)}</div>`
+                : `${faq.note ? `<p class="faq-note">${faq.note}</p>` : ""}${faqRates(faq)}${faqFootnote(faq)}`
             }
-            ${
-              faq.footnote
-                ? `<p class="faq-footnote">${faq.footnote.replace(
-                    /\+\d+/g,
-                    (phone) => `<a href="tel:${phone}">${phone}</a>`
-                  )}</p>`
-                : ""
-            }
-          </div>`
-      )
+          </div>`;
+      })
       .join("");
+    faqs.addEventListener("click", (event) => {
+      const btn = event.target.closest(".faq-toggle");
+      if (!btn) return;
+      const detail = document.getElementById(btn.getAttribute("aria-controls"));
+      const open = btn.getAttribute("aria-expanded") !== "true";
+      btn.setAttribute("aria-expanded", String(open));
+      detail.hidden = !open;
+    });
     document.getElementById("faqs-panel").hidden = !(cfg.faqs || []).length;
 
     if (cfg.backgroundImage) {

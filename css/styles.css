@@ -1082,3 +1082,14 @@ body {
   margin: 0.3rem auto 0.8rem;
   max-width: 28rem;
 }
+
+.panel .faq-toggle {
+  display: block;
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+}
+
+.faq-more {
+  margin-top: 0.5rem;
+}
