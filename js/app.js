@@ -182,7 +182,7 @@
       img.src = photo.src;
       const caption = document.createElement("span");
       caption.className = "shot-caption";
-      caption.textContent = photo.caption || "Add a photo";
+      caption.textContent = photo.caption || "";
       button.append(img, caption);
       button.addEventListener("pointerdown", (event) => {
         pointerStartX = event.clientX;

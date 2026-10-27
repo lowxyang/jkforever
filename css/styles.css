@@ -339,6 +339,11 @@ body {
   display: none;
 }
 
+.preview-caption:empty,
+.shot-caption:empty {
+  display: none;
+}
+
 .preview-caption {
   z-index: 2;
   position: absolute;
