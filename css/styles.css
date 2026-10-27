@@ -1062,9 +1062,10 @@ body {
   border: 0;
   background: none;
   color: #6f7c3f;
-  font-family: var(--script);
-  font-size: 2.1rem;
-  letter-spacing: 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
   text-transform: none;
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
