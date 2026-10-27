@@ -114,6 +114,5 @@ window.WEDDING = {
     { src: "assets/photos/05.jpg", caption: "", position: "center 78%" },
     { src: "assets/photos/06.jpg", caption: "", position: "center 55%" },
     { src: "assets/photos/07.jpg", caption: "", position: "center 55%" },
-    { src: "assets/photos/08.jpg", caption: "", position: "center 40%" },
   ],
 };

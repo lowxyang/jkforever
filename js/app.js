@@ -326,7 +326,8 @@
 
   function scrollGallery(direction) {
     if (!cfg.photos.length) return;
-    const next = Math.min(cfg.photos.length - 1, Math.max(0, activeIndex + direction));
+    const count = cfg.photos.length;
+    const next = (activeIndex + direction + count) % count;
     selectPhoto(next, true);
   }
 
