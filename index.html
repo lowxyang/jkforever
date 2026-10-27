@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Allura&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=52" />
+    <link rel="stylesheet" href="css/styles.css?v=55" />
   </head>
   <body>
     <div class="gate" id="gate">
@@ -68,6 +68,7 @@
         </section>
 
         <section class="page page--right" id="page-details" aria-label="Wedding information">
+          <div id="page-main">
           <header class="invite-head">
             <p class="kicker" id="tagline"></p>
             <h1 class="script invite-names" id="invite-names"></h1>
@@ -122,7 +123,7 @@
             <h2>Wedding Registry</h2>
             <div id="registry-text"></div>
             <p class="registry-link">
-              <a href="https://wise.com/pay/me/khinet4" target="_blank" rel="noopener noreferrer">Wishing Well</a>
+              <a href="#registry" id="wishing-well-link">Wishing Well</a>
             </p>
           </section>
 
@@ -132,6 +133,16 @@
           </section>
 
           <footer class="closing" id="closing"></footer>
+          </div>
+
+          <div id="page-registry" class="registry-page" hidden>
+            <button type="button" class="registry-back" id="registry-back">&larr; Back to invitation</button>
+            <section class="panel">
+              <h2>Wedding Registry</h2>
+              <div id="registry-page-text"></div>
+              <div class="currencies" id="currencies"></div>
+            </section>
+          </div>
         </section>
       </article>
     </main>
@@ -162,7 +173,7 @@
       </button>
     </div>
 
-    <script src="js/config.js?v=41"></script>
-    <script src="js/app.js?v=41"></script>
+    <script src="js/config.js?v=42"></script>
+    <script src="js/app.js?v=42"></script>
   </body>
 </html>

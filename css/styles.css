@@ -741,16 +741,16 @@ body {
 .registry-link a {
   font-family: var(--script);
   font-size: 2.3rem;
-  color: #8f9e57;
+  color: #6f7c3f;
   text-decoration: underline;
-  text-decoration-color: #8f9e57;
+  text-decoration-color: #6f7c3f;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.18em;
 }
 
 .registry-link a:hover {
-  color: #6f7c3f;
-  text-decoration-color: #6f7c3f;
+  color: #8f9e57;
+  text-decoration-color: #8f9e57;
 }
 
 .faqs {
@@ -1030,4 +1030,54 @@ body {
     transform: none;
     transition: none;
   }
+}
+
+.registry-back {
+  margin: 0 0 0.6rem;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-family: var(--serif, inherit);
+  font-size: 1rem;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.registry-back:hover {
+  color: var(--sage);
+}
+
+.currencies {
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.currency + .currency {
+  margin-top: 0.4rem;
+}
+
+.panel .currency-btn {
+  padding: 0.2rem 0.6rem;
+  border: 0;
+  background: none;
+  color: #6f7c3f;
+  font-family: var(--script);
+  font-size: 2.1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.panel .currency-btn:hover,
+.panel .currency-btn[aria-expanded="true"] {
+  color: #8f9e57;
+}
+
+.currency-detail {
+  margin: 0.3rem auto 0.8rem;
+  max-width: 28rem;
 }

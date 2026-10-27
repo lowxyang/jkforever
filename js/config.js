@@ -64,6 +64,13 @@ window.WEDDING = {
       "Your love and presence on our wedding day are the greatest gifts we could ever receive.",
       "If you wish to give us a little something extra, we have set up an online wishing well via bank transfer.",
     ],
+    // Text shown when a currency is tapped on the Wishing Well page.
+    currencies: [
+      { code: "AUD", lines: [] },
+      { code: "USD", lines: [] },
+      { code: "GBP", lines: [] },
+      { code: "MYR", lines: [] },
+    ],
   },
   faqs: [
     {

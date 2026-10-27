@@ -115,6 +115,43 @@
       .map((line) => `<p>${line}</p>`)
       .join("");
     document.getElementById("registry-panel").hidden = !(registry.lines || []).length;
+    document.getElementById("registry-page-text").innerHTML = (registry.lines || [])
+      .map((line) => `<p>${line}</p>`)
+      .join("");
+    document.getElementById("currencies").innerHTML = (registry.currencies || [])
+      .map(
+        (item, index) => `
+          <div class="currency">
+            <button type="button" class="currency-btn" aria-expanded="false" aria-controls="currency-${index}">${item.code}</button>
+            <div class="currency-detail" id="currency-${index}" hidden>
+              ${(item.lines || []).map((line) => `<p>${line}</p>`).join("")}
+            </div>
+          </div>`
+      )
+      .join("");
+
+    const pageMain = document.getElementById("page-main");
+    const pageRegistry = document.getElementById("page-registry");
+    const showRegistry = (show) => {
+      pageMain.hidden = show;
+      pageRegistry.hidden = !show;
+      const right = document.getElementById("page-details");
+      right.scrollTop = 0;
+      if (show) right.scrollIntoView({ block: "start" });
+    };
+    document.getElementById("wishing-well-link").addEventListener("click", (event) => {
+      event.preventDefault();
+      showRegistry(true);
+    });
+    document.getElementById("registry-back").addEventListener("click", () => showRegistry(false));
+    document.getElementById("currencies").addEventListener("click", (event) => {
+      const btn = event.target.closest(".currency-btn");
+      if (!btn) return;
+      const detail = document.getElementById(btn.getAttribute("aria-controls"));
+      const open = btn.getAttribute("aria-expanded") !== "true";
+      btn.setAttribute("aria-expanded", String(open));
+      detail.hidden = !open;
+    });
 
     const closing = document.getElementById("closing");
     closing.innerHTML = (cfg.closing || []).map((line) => `<p>${line}</p>`).join("");
