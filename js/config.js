@@ -74,7 +74,6 @@ window.WEDDING = {
           "Account number: 242406705",
         ],
       },
-      { code: "USD", lines: [] },
       { code: "GBP", lines: [] },
       { code: "MYR", lines: [] },
     ],
