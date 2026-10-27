@@ -718,6 +718,11 @@ body {
   color: var(--ink-soft);
 }
 
+.cap-a {
+  font-size: 1.35em;
+  line-height: 0.8;
+}
+
 .panel[hidden] {
   display: none;
 }
