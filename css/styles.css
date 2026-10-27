@@ -733,6 +733,20 @@ body {
   display: none;
 }
 
+.registry-qr {
+  display: block;
+  width: 10.5rem;
+  max-width: 70%;
+  height: auto;
+  margin: 1rem auto 0.3rem;
+  border-radius: 0.9rem;
+  box-shadow: 0 4px 14px rgba(44, 36, 24, 0.18);
+}
+
+.registry-qr[hidden] {
+  display: none;
+}
+
 .faqs {
   margin-top: 1.1rem;
 }

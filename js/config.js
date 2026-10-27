@@ -59,6 +59,13 @@ window.WEDDING = {
     "Thank you for all the love and support you've shown us over the years. We feel so lucky to share this special moment with the people who mean the most to us.",
     "We can't wait to see you on our wedding day!",
   ],
+  registry: {
+    lines: [
+      "Your love and presence on our wedding day are the greatest gifts we could ever receive.",
+      "If you wish to give us a little something extra, we have set up an online wishing well via bank transfer.",
+    ],
+    qr: "assets/decor/wishing-well-qr.png",
+  },
   faqs: [
     {
       question: "Dress code & footwear",

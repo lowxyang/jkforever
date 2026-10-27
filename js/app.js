@@ -110,6 +110,16 @@
       .map((item) => `<li>${eventHtml(item)}</li>`)
       .join("");
 
+    const registry = cfg.registry || {};
+    document.getElementById("registry-text").innerHTML = (registry.lines || [])
+      .map((line) => `<p>${line}</p>`)
+      .join("");
+    const registryQr = document.getElementById("registry-qr");
+    if (registry.qr) registryQr.src = registry.qr;
+    registryQr.hidden = !registry.qr;
+    document.getElementById("registry-panel").hidden =
+      !(registry.lines || []).length && !registry.qr;
+
     const closing = document.getElementById("closing");
     closing.innerHTML = (cfg.closing || []).map((line) => `<p>${line}</p>`).join("");
     closing.hidden = !(cfg.closing || []).length;
