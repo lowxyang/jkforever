@@ -740,15 +740,17 @@ body {
 
 .registry-link a {
   font-family: var(--script);
-  font-size: 1.6rem;
-  color: var(--ink);
+  font-size: 2.3rem;
+  color: #8f9e57;
   text-decoration: underline;
-  text-decoration-color: var(--gold);
-  text-underline-offset: 0.2em;
+  text-decoration-color: #8f9e57;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
 }
 
 .registry-link a:hover {
-  color: var(--sage);
+  color: #6f7c3f;
+  text-decoration-color: #6f7c3f;
 }
 
 .faqs {
