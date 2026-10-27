@@ -11,8 +11,9 @@ from openpyxl.utils import get_column_letter
 
 ROOT = Path(__file__).resolve().parent
 WORKBOOK = ROOT / "RSVPs.xlsx"
-HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"]
-WIDTHS = [22, 22, 36, 32, 36]
+BASE_HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"]
+HEADERS = BASE_HEADERS + ["Message / wishes"]
+WIDTHS = [22, 22, 36, 32, 36, 48]
 
 
 class InvitationHandler(SimpleHTTPRequestHandler):
@@ -50,6 +51,7 @@ class InvitationHandler(SimpleHTTPRequestHandler):
             attendees,
             str(data.get("diet", "")).strip(),
             str(data.get("contact") or data.get("email") or "").strip(),
+            str(data.get("message", "")).strip(),
         ]
         try:
             append_rsvp(row)
@@ -68,8 +70,17 @@ class InvitationHandler(SimpleHTTPRequestHandler):
 
 
 def has_current_layout(path):
-    sheet = load_workbook(path).active
-    return [sheet.cell(1, index).value for index in range(1, len(HEADERS) + 1)] == HEADERS
+    workbook = load_workbook(path)
+    sheet = workbook.active
+    first = [sheet.cell(1, index).value for index in range(1, len(BASE_HEADERS) + 1)]
+    if first != BASE_HEADERS:
+        return False
+    if sheet.cell(1, len(HEADERS)).value is None:
+        # Older five-column file: add the message column in place.
+        sheet.cell(1, len(HEADERS)).value = HEADERS[-1]
+        sheet.column_dimensions[get_column_letter(len(HEADERS))].width = WIDTHS[-1]
+        workbook.save(path)
+    return True
 
 
 def append_rsvp(row):

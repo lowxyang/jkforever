@@ -11,7 +11,7 @@
  *
  * Already deployed? After pasting this version:
  *   a. Pick "tidySheet" in the function menu at the top and press Run (approve
- *      the permission prompt). This trims the existing RSVPs tab to the five
+ *      the permission prompt). This trims the existing RSVPs tab to the six
  *      columns below. The old Guests and Note columns are removed.
  *   b. Deploy → Manage deployments → pencil icon → Version: New version → Deploy.
  *      The URL stays the same.
@@ -21,7 +21,8 @@
  * and a fresh "RSVPs" tab is started.
  * Open the Google Sheet in Excel, or File → Download → Microsoft Excel.
  */
-const HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"];
+const BASE_HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"];
+const HEADERS = BASE_HEADERS.concat(["Message / wishes"]);
 const LEGACY_HEADERS = ["Timestamp", "Name", "Attending", "Guests", "Diet", "Note", "Email"];
 
 /** Run once from the editor to trim an existing sheet to the current columns. */
@@ -38,6 +39,7 @@ function doPost(e) {
     data.attendees || data.name || "",
     data.diet || "",
     data.contact || data.email || "",
+    data.message || "",
   ]);
   return json_({ ok: true });
 }
@@ -51,6 +53,10 @@ function getRsvpSheet_() {
   let sheet = spreadsheet.getSheetByName("RSVPs");
   if (sheet && sheet.getLastRow() > 0 && hasLayout_(sheet, LEGACY_HEADERS)) {
     migrateLegacy_(sheet);
+  }
+  if (sheet && sheet.getLastRow() > 0 && hasLayout_(sheet, BASE_HEADERS) && !hasLayout_(sheet, HEADERS)) {
+    // Existing five-column sheet: add the message column in place.
+    sheet.getRange(1, HEADERS.length).setValue(HEADERS[HEADERS.length - 1]);
   }
   if (sheet && sheet.getLastRow() > 0 && !hasLayout_(sheet, HEADERS)) {
     const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH-mm");
@@ -79,6 +85,7 @@ function migrateLegacy_(sheet) {
     row[1],
     row[4],
     row[6],
+    "",
   ]);
   sheet.clearContents();
   sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
@@ -105,6 +112,7 @@ function readRsvp_(e) {
     attendees: fields.attendees || fields.name,
     diet: fields.diet,
     contact: fields.contact || fields.email,
+    message: fields.message,
   };
 }
 
