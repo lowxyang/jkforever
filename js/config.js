@@ -74,7 +74,14 @@ window.WEDDING = {
           "Account number: 242406705",
         ],
       },
-      { code: "GBP", lines: [] },
+      {
+        code: "GBP",
+        lines: [
+          "Name: Khine Tin Zar Thu",
+          "Account number: 67587347",
+          "Sort code: 23-14-70",
+        ],
+      },
       { code: "MYR", lines: [] },
     ],
   },
