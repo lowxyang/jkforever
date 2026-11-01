@@ -130,6 +130,66 @@
       )
       .join("");
 
+    const calendar = cfg.calendar || {};
+    document.getElementById("directions-link").href = cfg.directionsUrl || "#";
+    if (calendar.startDate) {
+      const compact = (iso) => iso.replace(/-/g, "");
+      const nextDay = (iso) => {
+        const date = new Date(`${iso}T00:00:00Z`);
+        date.setUTCDate(date.getUTCDate() + 1);
+        return date.toISOString().slice(0, 10);
+      };
+      const start = calendar.startDate;
+      const end = nextDay(start);
+      const enc = encodeURIComponent;
+      document.getElementById("cal-google").href =
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        `&text=${enc(calendar.title)}&dates=${compact(start)}/${compact(end)}` +
+        `&details=${enc(calendar.description || "")}&location=${enc(calendar.location || "")}`;
+      document.getElementById("cal-outlook").href =
+        "https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent" +
+        `&subject=${enc(calendar.title)}&startdt=${start}&enddt=${end}&allday=true` +
+        `&body=${enc(calendar.description || "")}&location=${enc(calendar.location || "")}`;
+      const escapeIcs = (text) =>
+        String(text).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Khine & Josh Wedding//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        `UID:${compact(start)}-wedding@jkforever`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`,
+        `DTSTART;VALUE=DATE:${compact(start)}`,
+        `DTEND;VALUE=DATE:${compact(end)}`,
+        `SUMMARY:${escapeIcs(calendar.title)}`,
+        `LOCATION:${escapeIcs(calendar.location || "")}`,
+        `DESCRIPTION:${escapeIcs(calendar.description || "")}`,
+        "END:VEVENT",
+        "END:VCALENDAR",
+      ].join("\r\n");
+      document.getElementById("cal-apple").href = URL.createObjectURL(
+        new Blob([ics], { type: "text/calendar;charset=utf-8" })
+      );
+    }
+    const calBtn = document.getElementById("cal-btn");
+    const calMenu = document.getElementById("cal-menu");
+    const setCalMenu = (open) => {
+      calMenu.hidden = !open;
+      calBtn.setAttribute("aria-expanded", String(open));
+    };
+    calBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setCalMenu(calMenu.hidden);
+    });
+    calMenu.addEventListener("click", () => setTimeout(() => setCalMenu(false), 0));
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".cal-wrap")) setCalMenu(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setCalMenu(false);
+    });
+
     const pageMain = document.getElementById("page-main");
     const pageRegistry = document.getElementById("page-registry");
     const showRegistry = (show) => {

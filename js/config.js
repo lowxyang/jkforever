@@ -117,6 +117,15 @@ window.WEDDING = {
   passcodeHash:
     "2070f725ff1c765b73c498de52bc419377979691f6100de3ed99794aeb40d988",
   /** Replies from the live site are appended to the Wedding RSVPs Google Sheet. */
+  // "Add to Calendar" and "Directions" under the RSVP form.
+  calendar: {
+    title: "Khine & Josh Wedding 2027",
+    startDate: "2027-05-29", // all-day event
+    location: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
+    description: "Khine & Xian Yang (Josh) are getting married at Conrad Bali. We can't wait to celebrate with you!",
+  },
+  directionsUrl:
+    "https://www.google.com/maps/place/Conrad+Bali/@-8.7811376,115.2224215,17z/data=!4m10!3m9!1s0x2dd2430f68571fcd:0xda9914e4e153cf28!5m3!1s2027-01-11!4m1!1i2!8m2!3d-8.7811376!4d115.2249964!16s%2Fm%2F011mytc3?entry=ttu&g_ep=EgoyMDI2MTAyOC4wIKXMDSoASAFQAw%3D%3D",
   sheetsEndpoint:
     "https://script.google.com/macros/s/AKfycbz1VtbDwMWhD7wE88x8ktB5PzqZQ5a65op-OtWDbgJUVUMklTiyeEXIQ_T-AriFxz4/exec",
   musicSrc: "assets/music/yes-i-will.mp3",
