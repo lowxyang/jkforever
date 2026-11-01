@@ -1,11 +1,11 @@
 :root {
   --cream: #f6efe4;
   --paper: #fbf7f0;
-  --ink: #2c2418;
-  --ink-soft: #5c5348;
+  --ink: #1c160f;
+  --ink-soft: #423c34;
   --gold: #b08d57;
   --gold-soft: #d4c0a1;
-  --sage: #6d7a6c;
+  --sage: #576256;
   --olive: var(--sage);
   --blush: #c9a9a0;
   --shadow: 0 24px 60px rgba(44, 36, 24, 0.22);
@@ -741,16 +741,16 @@ body {
 .registry-link a {
   font-family: var(--script);
   font-size: 2.3rem;
-  color: #6f7c3f;
+  color: #545e30;
   text-decoration: underline;
-  text-decoration-color: #6f7c3f;
+  text-decoration-color: #545e30;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.18em;
 }
 
 .registry-link a:hover {
-  color: #8f9e57;
-  text-decoration-color: #8f9e57;
+  color: #748047;
+  text-decoration-color: #748047;
 }
 
 .faqs {
@@ -1061,7 +1061,7 @@ body {
   padding: 0.2rem 0.6rem;
   border: 0;
   background: none;
-  color: #6f7c3f;
+  color: #545e30;
   font-family: var(--serif);
   font-size: 1.2rem;
   line-height: 1.55;
@@ -1075,7 +1075,7 @@ body {
 
 .panel .currency-btn:hover,
 .panel .currency-btn[aria-expanded="true"] {
-  color: #8f9e57;
+  color: #748047;
 }
 
 .currency-detail {
