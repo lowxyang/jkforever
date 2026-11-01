@@ -29,7 +29,7 @@ window.WEDDING = {
   story: "Conrad Bali, Jalan Pratama 168, Tanjung Benoa, Bali 80363, Indonesia",
   schedule: [
     {
-      time: "09:00 a.m.",
+      time: "9:00 a.m.",
       label: "Gate Crashing / Tea Ceremony (Family / Wedding party only)",
       image: "assets/decor/tea-ceremony.png",
       feature: true,
