@@ -82,7 +82,14 @@ window.WEDDING = {
           "Sort code: 23-14-70",
         ],
       },
-      { code: "MYR", lines: [] },
+      {
+        code: "MYR",
+        lines: [
+          "Name: Joshua Low Xian Yang",
+          "Account Number: 300-303-769-8",
+          "Bank: UOB",
+        ],
+      },
     ],
   },
   faqs: [
