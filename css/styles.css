@@ -809,6 +809,7 @@ body {
   font-style: italic;
 }
 
+.faq p a,
 .faq-footnote a {
   color: inherit;
   text-decoration-color: var(--gold);

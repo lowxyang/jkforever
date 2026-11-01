@@ -112,6 +112,13 @@ window.WEDDING = {
       footnote:
         "*Room rates may change in 2027. Please get in touch directly with Conrad Bali at +6281138002476",
     },
+    {
+      question: "Transport to the Hotel",
+      lines: [
+        "The easiest way to get to the hotel is by <strong>Grab</strong>, a convenient and reliable ride-hailing service widely used in Bali.",
+        'Alternatively, you can arrange a private transfer directly with <strong>Conrad Bali</strong> by contacting the hotel on <strong><a href="tel:+6281138002476">+62 811-3800-2476</a></strong>.',
+      ],
+    },
   ],
   /** SHA-256 of "forever" — change before sharing the real link. */
   passcodeHash:
