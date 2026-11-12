@@ -36,12 +36,11 @@ function tidySheet() {
 
 function doPost(e) {
   const data = readRsvp_(e);
-  const label = attendingLabel_(data.attending);
-  splitCombinedSheet_();
-  const sheet = ensureTab_(label === DECLINE_TAB ? DECLINE_TAB : ACCEPT_TAB);
+  const declined = isDecline_(data.attending);
+  const sheet = findTab_(declined ? "decline" : "accept");
   sheet.appendRow([
     data.submittedAt || new Date().toISOString(),
-    label,
+    declined ? DECLINE_TAB : ACCEPT_TAB,
     data.attendees || data.name || "",
     data.diet || "",
     data.contact || data.email || "",
@@ -52,7 +51,23 @@ function doPost(e) {
 }
 
 function doGet() {
-  return json_({ ok: true, message: "RSVP endpoint is live." });
+  return json_({ ok: true, version: 3, message: "RSVP endpoint is live." });
+}
+
+/** Use the tab they already created, matching "accept" / "joyfully" or "decline" / "regret". */
+function findTab_(kind) {
+  const words = kind === "decline" ? ["decline", "regret"] : ["accept", "joyfully"];
+  const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  for (let index = 0; index < sheets.length; index++) {
+    const name = sheets[index].getName().toLowerCase();
+    if (words.some((word) => name.indexOf(word) !== -1)) return sheets[index];
+  }
+  return ensureTab_(kind === "decline" ? DECLINE_TAB : ACCEPT_TAB);
+}
+
+function isDecline_(value) {
+  const answer = String(value || "").toLowerCase();
+  return answer === "no" || answer.indexOf("regret") !== -1 || answer.indexOf("decline") !== -1;
 }
 
 function ensureTab_(name) {
@@ -87,8 +102,9 @@ function splitCombinedSheet_() {
   const accept = [];
   const decline = [];
   const other = [];
+  const attendingColumn = attendingColumn_(sheet);
   rows.forEach((row) => {
-    const label = attendingLabel_(row[1]);
+    const label = attendingLabel_(row[attendingColumn]);
     const normalized = row.slice(0, HEADERS.length);
     while (normalized.length < HEADERS.length) normalized.push("");
     normalized[1] = label || row[1];
@@ -109,6 +125,15 @@ function splitCombinedSheet_() {
     sheet.clearContents();
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
+}
+
+function attendingColumn_(sheet) {
+  const width = Math.max(sheet.getLastColumn(), 1);
+  const headers = sheet.getRange(1, 1, 1, width).getValues()[0];
+  for (let index = 0; index < headers.length; index++) {
+    if (String(headers[index] || "").toLowerCase().indexOf("attend") === 0) return index;
+  }
+  return 1;
 }
 
 function appendRows_(sheet, rows) {

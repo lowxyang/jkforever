@@ -99,6 +99,17 @@ def style_sheet(sheet):
         sheet.column_dimensions[get_column_letter(index)].width = width
 
 
+def find_tab(workbook, declined):
+    words = ("decline", "regret") if declined else ("accept", "joyfully")
+    for name in workbook.sheetnames:
+        lowered = name.lower()
+        if any(word in lowered for word in words):
+            return name
+    title = DECLINE_TAB if declined else ACCEPT_TAB
+    ensure_tab(workbook, title)
+    return title
+
+
 def ensure_tab(workbook, title):
     sheet = workbook[title] if title in workbook.sheetnames else workbook.create_sheet(title)
     style_sheet(sheet)
@@ -148,9 +159,7 @@ def append_rsvp(row):
         workbook = Workbook()
         workbook.active.title = ACCEPT_TAB
     split_combined(workbook)
-    ensure_tab(workbook, ACCEPT_TAB)
-    ensure_tab(workbook, DECLINE_TAB)
-    title = DECLINE_TAB if row[1] == DECLINE_TAB else ACCEPT_TAB
+    title = find_tab(workbook, row[1] == DECLINE_TAB)
     workbook[title].append(row)
     # Drop the empty default sheet left behind when a new workbook is created.
     if "Sheet" in workbook.sheetnames and workbook["Sheet"].cell(1, 1).value is None and len(workbook.sheetnames) > 1:
