@@ -22,7 +22,7 @@
  * Open the Google Sheet in Excel, or File → Download → Microsoft Excel.
  */
 const BASE_HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"];
-const HEADERS = BASE_HEADERS.concat(["Message / wishes"]);
+const HEADERS = BASE_HEADERS.concat(["Message / wishes", "Song suggestion"]);
 const LEGACY_HEADERS = ["Timestamp", "Name", "Attending", "Guests", "Diet", "Note", "Email"];
 
 /** Run once from the editor to trim an existing sheet to the current columns. */
@@ -40,6 +40,7 @@ function doPost(e) {
     data.diet || "",
     data.contact || data.email || "",
     data.message || "",
+    data.song || "",
   ]);
   return json_({ ok: true });
 }
@@ -54,11 +55,9 @@ function getRsvpSheet_() {
   if (sheet && sheet.getLastRow() > 0 && hasLayout_(sheet, LEGACY_HEADERS)) {
     migrateLegacy_(sheet);
   }
-  if (sheet && sheet.getLastRow() > 0 && hasLayout_(sheet, BASE_HEADERS) && !hasLayout_(sheet, HEADERS)) {
-    // Existing five-column sheet: add the message column in place.
-    sheet.getRange(1, HEADERS.length).setValue(HEADERS[HEADERS.length - 1]);
-  }
-  if (sheet && sheet.getLastRow() > 0 && !hasLayout_(sheet, HEADERS)) {
+  if (sheet && sheet.getLastRow() > 0 && extendHeaders_(sheet)) {
+    // Existing sheet already matches, or only needed the newer columns added.
+  } else if (sheet && sheet.getLastRow() > 0 && !hasLayout_(sheet, HEADERS)) {
     const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH-mm");
     sheet.setName("RSVPs (old layout " + stamp + ")");
     sheet = null;
@@ -69,6 +68,22 @@ function getRsvpSheet_() {
     sheet.setFrozenRows(1);
   }
   return sheet;
+}
+
+/** Add any missing newer columns when the existing headers are a prefix of HEADERS. */
+function extendHeaders_(sheet) {
+  const width = Math.max(sheet.getLastColumn(), HEADERS.length);
+  const row = sheet.getRange(1, 1, 1, width).getValues()[0];
+  let filled = 0;
+  while (filled < row.length && row[filled] !== "" && row[filled] !== null) filled++;
+  if (filled > HEADERS.length) return false;
+  for (let index = 0; index < filled; index++) {
+    if (row[index] !== HEADERS[index]) return false;
+  }
+  if (filled < HEADERS.length) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+  return true;
 }
 
 function hasLayout_(sheet, headers) {
@@ -85,6 +100,7 @@ function migrateLegacy_(sheet) {
     row[1],
     row[4],
     row[6],
+    "",
     "",
   ]);
   sheet.clearContents();
@@ -113,6 +129,7 @@ function readRsvp_(e) {
     diet: fields.diet,
     contact: fields.contact || fields.email,
     message: fields.message,
+    song: fields.song,
   };
 }
 

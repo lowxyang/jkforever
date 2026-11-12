@@ -96,7 +96,7 @@ window.WEDDING = {
     {
       question: "Dress code & footwear",
       lines: [
-        "Dress up as you wish - We have no strict dress code!",
+        "While there is no strict dress code, we invite you to dress up and celebrate the occasion with us.",
         "However, we recommend choosing footwear suitable for a beachside wedding ceremony",
       ],
     },
@@ -123,7 +123,7 @@ window.WEDDING = {
       question: "Transport to the Hotel",
       lines: [
         "The easiest way to get to the hotel is by <strong>Grab</strong>, a convenient and reliable ride-hailing service widely used in Bali.",
-        'Alternatively, you can arrange a private transfer directly with <strong>Conrad Bali</strong> by contacting the hotel on <strong><a href="tel:+6281138002476">+62 811-3800-2476</a></strong>.',
+        'Alternatively, you can arrange a private transfer directly with <strong>Conrad Bali</strong> by contacting the hotel on <strong><a href="tel:+6281138002476">+62 811-3800-2476</a></strong> on Whatsapp, or email <strong><a href="mailto:Bali.Reservations@ConradHotels.com">Bali.Reservations@ConradHotels.com</a></strong>.',
       ],
     },
   ],

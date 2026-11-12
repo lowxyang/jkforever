@@ -12,8 +12,8 @@ from openpyxl.utils import get_column_letter
 ROOT = Path(__file__).resolve().parent
 WORKBOOK = ROOT / "RSVPs.xlsx"
 BASE_HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"]
-HEADERS = BASE_HEADERS + ["Message / wishes"]
-WIDTHS = [22, 22, 36, 32, 36, 48]
+HEADERS = BASE_HEADERS + ["Message / wishes", "Song suggestion"]
+WIDTHS = [22, 22, 36, 32, 36, 48, 36]
 
 
 class InvitationHandler(SimpleHTTPRequestHandler):
@@ -52,6 +52,7 @@ class InvitationHandler(SimpleHTTPRequestHandler):
             str(data.get("diet", "")).strip(),
             str(data.get("contact") or data.get("email") or "").strip(),
             str(data.get("message", "")).strip(),
+            str(data.get("song", "")).strip(),
         ]
         try:
             append_rsvp(row)
@@ -75,10 +76,16 @@ def has_current_layout(path):
     first = [sheet.cell(1, index).value for index in range(1, len(BASE_HEADERS) + 1)]
     if first != BASE_HEADERS:
         return False
-    if sheet.cell(1, len(HEADERS)).value is None:
-        # Older five-column file: add the message column in place.
-        sheet.cell(1, len(HEADERS)).value = HEADERS[-1]
-        sheet.column_dimensions[get_column_letter(len(HEADERS))].width = WIDTHS[-1]
+    changed = False
+    for index, header in enumerate(HEADERS, start=1):
+        if sheet.cell(1, index).value == header:
+            continue
+        if sheet.cell(1, index).value not in (None, ""):
+            return False
+        sheet.cell(1, index).value = header
+        sheet.column_dimensions[get_column_letter(index)].width = WIDTHS[index - 1]
+        changed = True
+    if changed:
         workbook.save(path)
     return True
 
