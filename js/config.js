@@ -141,7 +141,7 @@ window.WEDDING = {
   directionsUrl:
     "https://www.google.com/maps/place/Conrad+Bali/@-8.7811376,115.2224215,17z/data=!4m10!3m9!1s0x2dd2430f68571fcd:0xda9914e4e153cf28!5m3!1s2027-01-11!4m1!1i2!8m2!3d-8.7811376!4d115.2249964!16s%2Fm%2F011mytc3?entry=ttu&g_ep=EgoyMDI2MTAyOC4wIKXMDSoASAFQAw%3D%3D",
   sheetsEndpoint:
-    "https://script.google.com/macros/s/AKfycbz1VtbDwMWhD7wE88x8ktB5PzqZQ5a65op-OtWDbgJUVUMklTiyeEXIQ_T-AriFxz4/exec",
+    "https://script.google.com/macros/s/AKfycbxrk1iN_QL1kyihz2uu__3ingfCd8KZU8Bi7-f-RxJzAbDSpnKy_r4FmqkFto755eg1/exec",
   musicSrc: "assets/music/yes-i-will.mp3",
   backgroundImage: "assets/background/silk.jpg",
   fonts: {
