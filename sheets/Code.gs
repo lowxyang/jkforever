@@ -11,31 +11,37 @@
  *
  * Already deployed? After pasting this version:
  *   a. Pick "tidySheet" in the function menu at the top and press Run (approve
- *      the permission prompt). This trims the existing RSVPs tab to the six
- *      columns below. The old Guests and Note columns are removed.
+ *      the permission prompt). This moves existing replies onto two tabs,
+ *      "Joyfully accept" and "Regretfully decline".
  *   b. Deploy → Manage deployments → pencil icon → Version: New version → Deploy.
  *      The URL stays the same.
  *
- * The script creates an "RSVPs" tab and the header row if they are missing.
- * A tab with a layout it does not recognise is renamed "RSVPs (old layout …)"
- * and a fresh "RSVPs" tab is started.
+ * New replies are appended to the matching tab. A combined "RSVPs" tab is
+ * split the next time tidySheet or a new reply runs. A tab whose columns are
+ * not recognised is renamed "RSVPs (old layout …)" and left untouched.
  * Open the Google Sheet in Excel, or File → Download → Microsoft Excel.
  */
 const BASE_HEADERS = ["Timestamp", "Attending", "Attendee(s)", "Dietary requirements", "Email / WhatsApp"];
 const HEADERS = BASE_HEADERS.concat(["Message / wishes", "Song suggestion"]);
 const LEGACY_HEADERS = ["Timestamp", "Name", "Attending", "Guests", "Diet", "Note", "Email"];
+const ACCEPT_TAB = "Joyfully accept";
+const DECLINE_TAB = "Regretfully decline";
 
-/** Run once from the editor to trim an existing sheet to the current columns. */
+/** Run once from the editor to split an existing combined RSVPs tab. */
 function tidySheet() {
-  getRsvpSheet_();
+  splitCombinedSheet_();
+  ensureTab_(ACCEPT_TAB);
+  ensureTab_(DECLINE_TAB);
 }
 
 function doPost(e) {
-  const sheet = getRsvpSheet_();
   const data = readRsvp_(e);
+  const label = attendingLabel_(data.attending);
+  splitCombinedSheet_();
+  const sheet = ensureTab_(label === DECLINE_TAB ? DECLINE_TAB : ACCEPT_TAB);
   sheet.appendRow([
     data.submittedAt || new Date().toISOString(),
-    attendingLabel_(data.attending),
+    label,
     data.attendees || data.name || "",
     data.diet || "",
     data.contact || data.email || "",
@@ -49,25 +55,66 @@ function doGet() {
   return json_({ ok: true, message: "RSVP endpoint is live." });
 }
 
-function getRsvpSheet_() {
+function ensureTab_(name) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = spreadsheet.getSheetByName("RSVPs");
-  if (sheet && sheet.getLastRow() > 0 && hasLayout_(sheet, LEGACY_HEADERS)) {
-    migrateLegacy_(sheet);
-  }
-  if (sheet && sheet.getLastRow() > 0 && extendHeaders_(sheet)) {
-    // Existing sheet already matches, or only needed the newer columns added.
-  } else if (sheet && sheet.getLastRow() > 0 && !hasLayout_(sheet, HEADERS)) {
-    const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH-mm");
-    sheet.setName("RSVPs (old layout " + stamp + ")");
-    sheet = null;
-  }
-  if (!sheet) sheet = spreadsheet.insertSheet("RSVPs");
+  let sheet = spreadsheet.getSheetByName(name);
+  if (!sheet) sheet = spreadsheet.insertSheet(name);
   if (sheet.getLastRow() === 0) {
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
     sheet.setFrozenRows(1);
+  } else {
+    extendHeaders_(sheet);
   }
   return sheet;
+}
+
+/** Move rows on a combined RSVPs tab onto the accept and decline tabs. */
+function splitCombinedSheet_() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("RSVPs");
+  if (!sheet || sheet.getLastRow() === 0) return;
+  if (hasLayout_(sheet, LEGACY_HEADERS)) migrateLegacy_(sheet);
+  if (!(extendHeaders_(sheet) || hasLayout_(sheet, HEADERS))) {
+    const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH-mm");
+    sheet.setName("RSVPs (old layout " + stamp + ")");
+    return;
+  }
+  const rows = sheet
+    .getDataRange()
+    .getValues()
+    .slice(1)
+    .filter((row) => row.join("") !== "");
+  const accept = [];
+  const decline = [];
+  const other = [];
+  rows.forEach((row) => {
+    const label = attendingLabel_(row[1]);
+    const normalized = row.slice(0, HEADERS.length);
+    while (normalized.length < HEADERS.length) normalized.push("");
+    normalized[1] = label || row[1];
+    if (label === ACCEPT_TAB) accept.push(normalized);
+    else if (label === DECLINE_TAB) decline.push(normalized);
+    else other.push(normalized);
+  });
+  appendRows_(ensureTab_(ACCEPT_TAB), accept);
+  appendRows_(ensureTab_(DECLINE_TAB), decline);
+  if (other.length) {
+    sheet.clearContents();
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.getRange(2, 1, other.length, HEADERS.length).setValues(other);
+    sheet.setFrozenRows(1);
+  } else if (spreadsheet.getSheets().length > 1) {
+    spreadsheet.deleteSheet(sheet);
+  } else {
+    sheet.clearContents();
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+}
+
+function appendRows_(sheet, rows) {
+  if (!rows.length) return;
+  const start = Math.max(sheet.getLastRow(), 1) + 1;
+  sheet.getRange(start, 1, rows.length, HEADERS.length).setValues(rows);
 }
 
 /** Add any missing newer columns when the existing headers are a prefix of HEADERS. */
