@@ -597,6 +597,14 @@
     }
   });
 
+  const attendeesLabel = document.getElementById("attendees-label");
+  const attendingSelect = rsvpForm.querySelector('[name="attending"]');
+  const updateAttendeesLabel = () => {
+    attendeesLabel.textContent =
+      attendingSelect.value === "no" ? "Name" : "Name of attendee(s)";
+  };
+  attendingSelect.addEventListener("change", updateAttendeesLabel);
+
   rsvpForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     rsvpStatus.textContent = "Sending…";
@@ -629,6 +637,7 @@
       if (localSheet && !response.ok) throw new Error("RSVP was not saved");
       rsvpStatus.textContent = "Thank you — we have your reply.";
       rsvpForm.reset();
+      updateAttendeesLabel();
     } catch (error) {
       rsvpStatus.textContent = localSheet
         ? "Could not save to the spreadsheet. Close RSVPs.xlsx if it is open, then try again."
