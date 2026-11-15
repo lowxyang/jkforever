@@ -588,8 +588,18 @@
       gateError.textContent = "The guest list could not be loaded. Try again.";
       return;
     }
-    const enteredKey = entered.toLowerCase();
-    const match = guests.find((password) => password.toLowerCase() === enteredKey);
+    const words = (value) =>
+      value
+        .toLowerCase()
+        .split(/[\s-]+/)
+        .filter(Boolean);
+    const enteredWords = words(entered);
+    const match =
+      enteredWords.length &&
+      guests.some((password) => {
+        const passwordWords = words(password);
+        return enteredWords.every((word) => passwordWords.includes(word));
+      });
     if (match) {
       openInvitation();
     } else {

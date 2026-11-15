@@ -3,6 +3,7 @@
  * Photos: drop files into assets/photos/ and list them below.
  * Music: drop an mp3 into assets/music/ and set musicSrc.
  * Passwords: add one password per line in guest-passwords.md. Capitalisation does not matter.
+ * A guest may enter any of the words on their line, or several of them, in any order.
  *
  * RSVPs: `python3 server.py` writes each reply to RSVPs.xlsx.
  * For a public site, paste a Google Apps Script web app URL into sheetsEndpoint.

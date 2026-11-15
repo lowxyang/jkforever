@@ -1,6 +1,6 @@
 # Guest passwords
 
-Add one password per line. Capital letters do not matter.
+Add one password per line. Capital letters do not matter. A guest can enter any of the words on their line, or several of them. The words can be in any order.
 
 # Example: garden
 
