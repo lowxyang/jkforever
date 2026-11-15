@@ -599,11 +599,16 @@
 
   const attendeesLabel = document.getElementById("attendees-label");
   const attendingSelect = rsvpForm.querySelector('[name="attending"]');
-  const updateAttendeesLabel = () => {
-    attendeesLabel.textContent =
-      attendingSelect.value === "no" ? "Name" : "Name of attendee(s)";
+  const acceptOnlyFields = rsvpForm.querySelectorAll(".rsvp-accept-only");
+  const updateRsvpFields = () => {
+    const declining = attendingSelect.value === "no";
+    attendeesLabel.textContent = declining ? "Name" : "Name of attendee(s)";
+    acceptOnlyFields.forEach((field) => {
+      field.hidden = declining;
+      if (declining) field.querySelector("textarea").value = "";
+    });
   };
-  attendingSelect.addEventListener("change", updateAttendeesLabel);
+  attendingSelect.addEventListener("change", updateRsvpFields);
 
   rsvpForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -637,7 +642,7 @@
       if (localSheet && !response.ok) throw new Error("RSVP was not saved");
       rsvpStatus.textContent = "Thank you — we have your reply.";
       rsvpForm.reset();
-      updateAttendeesLabel();
+      updateRsvpFields();
     } catch (error) {
       rsvpStatus.textContent = localSheet
         ? "Could not save to the spreadsheet. Close RSVPs.xlsx if it is open, then try again."
