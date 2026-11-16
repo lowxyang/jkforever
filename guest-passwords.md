@@ -88,7 +88,7 @@ mikayla smith
 emma mchattan
 grace dagg
 jessica nicholls
-francisca mendez
+francisca mendes
 jasmine salas
 toh wei hann
 Shaarvin pillai
