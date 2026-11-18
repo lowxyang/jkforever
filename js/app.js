@@ -598,7 +598,9 @@
       enteredWords.length &&
       guests.some((password) => {
         const passwordWords = words(password);
-        return enteredWords.every((word) => passwordWords.includes(word));
+        const enteredIsPartOfPassword = enteredWords.every((word) => passwordWords.includes(word));
+        const passwordIsPartOfEntered = passwordWords.every((word) => enteredWords.includes(word));
+        return enteredIsPartOfPassword || passwordIsPartOfEntered;
       });
     if (match) {
       openInvitation();
